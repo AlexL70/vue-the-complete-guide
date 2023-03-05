@@ -25,15 +25,12 @@
       <br />
       <input
         type="text"
-        @input="onNameChanged($event)"
+        v-model:value="name"
         @keyup.enter="onConrirmName"
         placeholder="Enter your name"
       />
+      <button @click="resetInput">Reset input</button>
       <p>Your name is: <strong>{{ confirmedName }}</strong></p>
-      <form @submit.prevent="onSubmitForm">
-        <input type="text" />
-        <button>Submit</button>
-      </form>
     </section>
   </body>
 </html>
