@@ -25,10 +25,11 @@
       <input
         type="text"
         @input="onNameChanged($event)"
+        @keyup.enter="onConrirmName"
         placeholder="Enter your name"
       />
-      <p>Your name is: <strong>{{ name }}</strong></p>
-      <form @submit="onSubmitForm">
+      <p>Your name is: <strong>{{ confirmedName }}</strong></p>
+      <form @submit.prevent="onSubmitForm">
         <input type="text" />
         <button>Submit</button>
       </form>
