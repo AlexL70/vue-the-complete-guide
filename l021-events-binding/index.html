@@ -28,6 +28,10 @@
         placeholder="Enter your name"
       />
       <p>Your name is: <strong>{{ name }}</strong></p>
+      <form @submit="onSubmitForm">
+        <input type="text" />
+        <button>Submit</button>
+      </form>
     </section>
   </body>
 </html>
