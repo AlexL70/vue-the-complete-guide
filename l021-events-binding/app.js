@@ -7,6 +7,9 @@ const app = Vue.createApp({
     };
   },
   methods: {
+    outputFullName() {
+      return this.name === "" ? "" : `${this.name} Levinson`;
+    },
     add(num) {
       this.counter += num;
     },
@@ -18,7 +21,6 @@ const app = Vue.createApp({
     },
     resetInput() {
       this.name = "";
-      this.confirmedName = "";
     },
   },
 });

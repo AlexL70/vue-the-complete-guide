@@ -23,14 +23,9 @@
       <p v-once>Starting counter: {{ counter }}</p>
       <p>Result: {{ counter }}</p>
       <br />
-      <input
-        type="text"
-        v-model:value="name"
-        @keyup.enter="onConrirmName"
-        placeholder="Enter your name"
-      />
+      <input type="text" v-model="name" placeholder="Enter your name" />
       <button @click="resetInput">Reset input</button>
-      <p>Your name is: <strong>{{ confirmedName }}</strong></p>
+      <p>Your full name is: <strong>{{ outputFullName() }}</strong></p>
     </section>
   </body>
 </html>
