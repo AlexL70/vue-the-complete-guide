@@ -21,6 +21,13 @@
       <button @click="add(5)">Add 5</button>
       <button @click="sub(5)">Subtract 5</button>
       <p>Result: {{ counter }}</p>
+      <br />
+      <input
+        type="text"
+        @input="onNameChanged($event)"
+        placeholder="Enter your name"
+      />
+      <p>Your name is: <strong>{{ name }}</strong></p>
     </section>
   </body>
 </html>
