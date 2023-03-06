@@ -23,7 +23,12 @@
       <p v-once>Starting counter: {{ counter }}</p>
       <p>Result: {{ counter }}</p>
       <br />
-      <input type="text" v-model="name" placeholder="Enter your name" />
+      <input type="text" v-model="name" placeholder="Enter your first name" />
+      <input
+        type="text"
+        v-model="lastname"
+        placeholder="Enter your last name"
+      />
       <button @click="resetInput">Reset input</button>
       <p>Your full name is: <strong>{{ fullname }}</strong></p>
     </section>
