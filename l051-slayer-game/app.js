@@ -9,6 +9,8 @@ Vue.createApp({
             monsterHealth: 100,
             logMessages: [],
             currentRound: 0,
+            gameOver: false,
+            winner: null,
         };
     },
     methods: {
@@ -51,7 +53,44 @@ Vue.createApp({
             this.attackPlayer();
         },
     },
+    watch: {
+        playerHealth(value) {
+            if (value <= 0) {
+                this.gameOver = true;
+                if (this.monsterHealth <= 0) {
+                    this.winner = "draw"
+                } else {
+                    this.winner = "monster"
+                }
+            }
+        },
+        monsterHealth(value) {
+            if (value <= 0) {
+                this.gameOver = true;
+                if (this.playerHealth <= 0) {
+                    this.winner = "draw"
+                } else {
+                    this.winner = "player"
+                }
+            }
+        },
+    },
     computed: {
+        gameResult() {
+            let result = "";
+            switch (this.winner) {
+                case "draw":
+                    result = "It's a draw!"
+                    break;
+                case "player":
+                    result = "Congratulations! You won!"
+                    break;
+                case "monster":
+                    result = "It's a pity! You lost!"
+                    break;
+            }
+            return result;
+        },
         monsterBarStyles() {
             return { width: this.monsterHealth + '%' };
         },
