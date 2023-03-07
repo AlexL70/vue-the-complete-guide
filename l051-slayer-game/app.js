@@ -8,6 +8,7 @@ Vue.createApp({
             playerHealth: 100,
             monsterHealth: 100,
             logMessages: [],
+            currentRound: 0,
         };
     },
     methods: {
@@ -15,7 +16,17 @@ Vue.createApp({
             this.logMessages.push(message)
         },
         attackMonster() {
+            this.currentRound++;
             const hit = calculateHit(5, 12);
+            this.monsterHealth -= hit;
+            if (this.monsterHealth < 0)
+                this.monsterHealth = 0;
+            this.addLog(`Player hits ${hit} hitpoints. Monster's health drops to ${this.monsterHealth}`);
+            this.attackPlayer();
+        },
+        specialAttackMonster() {
+            this.currentRound++;
+            const hit = calculateHit(9, 18);
             this.monsterHealth -= hit;
             if (this.monsterHealth < 0)
                 this.monsterHealth = 0;
@@ -36,6 +47,9 @@ Vue.createApp({
         },
         playerBarStyles() {
             return { width: this.playerHealth + '%' };
+        },
+        specialAttackDisabled() {
+            return this.currentRound % 3 !== 0
         },
     },
 }).mount("#game");
