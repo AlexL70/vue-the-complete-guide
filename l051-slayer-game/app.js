@@ -40,6 +40,16 @@ Vue.createApp({
                 this.playerHealth = 0;
             this.addLog(`Monster hits ${hit} hitpoints. Player's health drops to ${this.playerHealth}`);
         },
+        healPlayer() {
+            this.currentRound++;
+            heal = calculateHit(6, 20);
+            if (this.playerHealth + heal > 100)
+                this.playerHealth = 100;
+            else
+                this.playerHealth += heal;
+            this.addLog(`Player heals himself for ${heal} hitpoints. Player's health increases to ${this.playerHealth}`);
+            this.attackPlayer();
+        },
     },
     computed: {
         monsterBarStyles() {
