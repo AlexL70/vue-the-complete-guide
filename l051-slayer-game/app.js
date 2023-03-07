@@ -52,6 +52,18 @@ Vue.createApp({
             this.addLog(`Player heals himself for ${heal} hitpoints. Player's health increases to ${this.playerHealth}`);
             this.attackPlayer();
         },
+        restart() {
+            this.playerHealth = 100;
+            this.monsterHealth = 100;
+            this.logMessages = [];
+            this.currentRound = 0;
+            this.gameOver = false;
+            this.winner = null;
+        },
+        surrender() {
+            this.winner = "monster";
+            this.gameOver = true;
+        }
     },
     watch: {
         playerHealth(value) {
