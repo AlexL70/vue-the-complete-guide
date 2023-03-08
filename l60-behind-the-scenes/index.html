@@ -18,9 +18,16 @@
     </header>
     <section id="app">
       <h2>How Vue Works</h2>
-      <input type="text" @input="saveInput">
+      <input type="text" @input="saveInput" />
       <button @click="setText">Set Text</button>
       <p>{{ message }}</p>
+    </section>
+    <section id="app2">
+      <!-- This would not work because "message" is a 
+      property of app (not app2) application and they
+      are not connected by any means -->
+      <!--p>{{ message }}</p-->
+      <p>{{ favouriteMeal }}</p>
     </section>
   </body>
 </html>
