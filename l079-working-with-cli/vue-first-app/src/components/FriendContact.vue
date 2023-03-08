@@ -11,26 +11,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import type { PropType } from 'vue';
-import type { Friend } from './../interfaces/Friend';
+import { Friend } from './../interfaces/Friend';
 
 export default defineComponent({
     data() {
         return {
             detailsAreVisible: false,
+            friend: new Friend("manuel", "Manuel Lorenz", "0123 456 789", "manuel@localhost.com"),
         };
-    },
-    props: {
-        friend: {
-            type: Object as PropType<Friend>,
-            required: true,
-            default: {
-                id: "manuel",
-                name: "Manuel Lorenz",
-                phone: "0123 456 789",
-                email: "manuel@localhost.com",
-            }
-        }
     },
     methods: {
         toggleDetails(): void {
