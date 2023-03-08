@@ -18,6 +18,15 @@ const app = Vue.createApp({
 app.mount('#app');
 
 Vue.createApp({
+  template: `
+    <div>
+      <!-- This would not work because "message" is a 
+      property of app (not app2) application and they
+      are not connected by any means -->
+      <!--p>{{ message }}</p-->
+      <p>{{ favouriteMeal }}</p>
+    </div>
+  `,
   data() {
     return {
       favouriteMeal: "Pizza",
