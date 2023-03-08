@@ -14,6 +14,30 @@ const app = Vue.createApp({
       //this.message = this.currentUserInput;
     },
   },
+  beforeCreate() {
+    console.log("beforeCreate()");
+  },
+  created() {
+    console.log("created()");
+  },
+  beforeMount() {
+    console.log("beforeMount()");
+  },
+  mounted() {
+    console.log("mounted()");
+  },
+  beforeUpdate() {
+    console.log("beforeUpdate()");
+  },
+  updated() {
+    console.log("updated");
+  },
+  beforeUnmount() {
+    console.log("beforeUnmount()");
+  },
+  unmounted() {
+    console.log("unmounted()");
+  },
 });
 
 app.mount('#app');
@@ -35,25 +59,28 @@ Vue.createApp({
   },
 }).mount('#app2');
 
-const data = {
-  message: "Hello!",
-  longMessage: "Hello! World!",
-};
+setTimeout(() => { app.unmount(); }, 3000);
 
-const handler = {
-  set(target, key, value) {
-    console.log(target);
-    console.log(key);
-    console.log(value);
-    if (key == "message")
-      target.longMessage = `${value} World!`
-  }
-};
+//const data = {
+//  message: "Hello!",
+//  longMessage: "Hello! World!",
+//};
+//
+//const handler = {
+//  set(target, key, value) {
+//    console.log(target);
+//    console.log(key);
+//    console.log(value);
+//    if (key == "message")
+//      target.longMessage = `${value} World!`
+//  }
+//};
+//
+//const proxy = new Proxy(data, handler);
+//
+//proxy.message = "Hello!!!";
+//console.log(proxy.longMessage);
 
-const proxy = new Proxy(data, handler);
-
-proxy.message = "Hello!!!";
-console.log(proxy.longMessage);
 
 //let message = "Hello!";
 //let longMessage = message + "World!";
