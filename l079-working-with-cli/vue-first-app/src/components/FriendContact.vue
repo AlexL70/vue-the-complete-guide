@@ -11,13 +11,36 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Friend } from './../interfaces/Friend';
+import type { Friend } from './../interfaces/Friend';
 
 export default defineComponent({
+    props: {
+        id: {
+            type: String,
+            required: true,
+        },
+        name: {
+            type: String,
+            required: true,
+        },
+        phoneNumber: {
+            type: String,
+            required: true,
+        },
+        emailAddress: {
+            type: String,
+            required: true,
+        },
+    },
     data() {
         return {
             detailsAreVisible: false,
-            friend: new Friend("manuel", "Manuel Lorenz", "0123 456 789", "manuel@localhost.com"),
+            friend: {
+                id: this.id,
+                name: this.name,
+                phone: this.phoneNumber,
+                email: this.emailAddress
+            } as Friend,
         };
     },
     methods: {
