@@ -5,7 +5,8 @@
         </header>
         <ul>
             <friend-contact v-for="friend in friends" :key="friend.id" :id="friend.id" :name="friend.name"
-                :phoneNumber="friend.phone" :emailAddress="friend.email" :isFavourite="friend.isFavourite"></friend-contact>
+                :phoneNumber="friend.phone" :emailAddress="friend.email" :isFavourite="friend.isFavourite"
+                @toggle-favourite="toggleFavouriteStatus"></friend-contact>
         </ul>
     </section>
 </template>
@@ -32,6 +33,13 @@ export default defineComponent({
                 } as Friend,
             ],
         };
+    },
+    methods: {
+        toggleFavouriteStatus(friendId: string) {
+            const friend = this.friends.find(friend => friend.id === friendId);
+            if (friend)
+                friend.isFavourite = !friend.isFavourite;
+        }
     }
 });
 </script>

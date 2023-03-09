@@ -3,4 +3,5 @@ export interface Friend {
   name: string;
   phone: string;
   email: string;
+  isFavourite: boolean;
 }

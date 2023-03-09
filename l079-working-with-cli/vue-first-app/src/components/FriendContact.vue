@@ -1,19 +1,18 @@
 <template>
     <li>
-        <h2>{{ friend.name }} {{ friendIsFavourite ? "(favourite)" : "" }}</h2>
-        <button @click="toggleIsFavourite"> {{ friendIsFavourite ? "Make not" : "Make" }} favourite</button>
+        <h2>{{ name }} {{ isFavourite ? "(favourite)" : "" }}</h2>
+        <button @click="toggleIsFavourite"> {{ isFavourite ? "Make not" : "Make" }} favourite</button>
         <br>
         <button @click="toggleDetails"> {{ detailsAreVisible ? "Hide" : "Show" }} details</button>
         <ul v-if="detailsAreVisible">
-            <li><strong>Phone:</strong>{{ friend.phone }}</li>
-            <li><strong>Email:</strong>{{ friend.email }}</li>
+            <li><strong>Phone:</strong>{{ phoneNumber }}</li>
+            <li><strong>Email:</strong>{{ emailAddress }}</li>
         </ul>
     </li>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import type { Friend } from './../interfaces/Friend';
 
 export default defineComponent({
     props: {
@@ -42,16 +41,20 @@ export default defineComponent({
             }
         },
     },
+    //emits: ["toggle-favourite"],
+    emits: {
+        "toggle-favourite": function (id: string) {
+            if (id)
+                return true;
+            else {
+                console.log("Warning! 'toggle-favourite' event has been emitted without id!")
+                return false;
+            }
+        },
+    },
     data() {
         return {
             detailsAreVisible: false,
-            friend: {
-                id: this.id,
-                name: this.name,
-                phone: this.phoneNumber,
-                email: this.emailAddress
-            } as Friend,
-            friendIsFavourite: this.isFavourite,
         };
     },
     methods: {
@@ -59,7 +62,7 @@ export default defineComponent({
             this.detailsAreVisible = !this.detailsAreVisible;
         },
         toggleIsFavourite(): void {
-            this.friendIsFavourite = !this.friendIsFavourite;
+            this.$emit("toggle-favourite", this.id);
         },
     },
 });
