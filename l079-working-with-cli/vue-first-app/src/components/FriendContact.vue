@@ -34,9 +34,13 @@ export default defineComponent({
             required: true,
         },
         isFavourite: {
-            type: Boolean,
-            required: true,
-        }
+            type: [Boolean, Number],
+            required: false,
+            default: false,
+            validator(value: any) {
+                return value === true || value === false || value === 0 || value === 1
+            }
+        },
     },
     data() {
         return {
