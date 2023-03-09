@@ -5,7 +5,7 @@
         </header>
         <ul>
             <friend-contact v-for="friend in friends" :id="friend.id" :name="friend.name" :phoneNumber="friend.phone"
-                :emailAddress="friend.email"></friend-contact>
+                :emailAddress="friend.email" :isFavourite="friend.isFavourite"></friend-contact>
         </ul>
     </section>
 </template>
@@ -22,12 +22,14 @@ export default defineComponent({
                     name: "Manuel Lorenz",
                     phone: "1234 666 777",
                     email: "manuel@localhost.com",
+                    isFavourite: true,
                 } as Friend,
                 {
                     id: "julie",
                     name: "Julie Jones",
                     phone: "9999 333 555",
                     email: "julie@localhost.com",
+                    isFavourite: false,
                 } as Friend,
             ],
         };

@@ -1,6 +1,8 @@
 <template>
     <li>
-        <h2>{{ friend.name }}</h2>
+        <h2>{{ friend.name }} {{ friendIsFavourite ? "(favourite)" : "" }}</h2>
+        <button @click="toggleIsFavourite"> {{ friendIsFavourite ? "Make not" : "Make" }} favourite</button>
+        <br>
         <button @click="toggleDetails"> {{ detailsAreVisible ? "Hide" : "Show" }} details</button>
         <ul v-if="detailsAreVisible">
             <li><strong>Phone:</strong>{{ friend.phone }}</li>
@@ -31,6 +33,10 @@ export default defineComponent({
             type: String,
             required: true,
         },
+        isFavourite: {
+            type: Boolean,
+            required: true,
+        }
     },
     data() {
         return {
@@ -41,12 +47,16 @@ export default defineComponent({
                 phone: this.phoneNumber,
                 email: this.emailAddress
             } as Friend,
+            friendIsFavourite: this.isFavourite,
         };
     },
     methods: {
         toggleDetails(): void {
             this.detailsAreVisible = !this.detailsAreVisible;
-        }
+        },
+        toggleIsFavourite(): void {
+            this.friendIsFavourite = !this.friendIsFavourite;
+        },
     },
 });
 </script>
