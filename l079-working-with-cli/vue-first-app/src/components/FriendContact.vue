@@ -8,6 +8,7 @@
             <li><strong>Phone:</strong>{{ phoneNumber }}</li>
             <li><strong>Email:</strong>{{ emailAddress }}</li>
         </ul>
+        <button @click="deleteFriend">Delete</button>
     </li>
 </template>
 
@@ -44,13 +45,22 @@ export default defineComponent({
     //emits: ["toggle-favourite"],
     emits: {
         "toggle-favourite": function (id: string) {
-            if (id)
+            if (id) {
                 return true;
+            }
             else {
-                console.log("Warning! 'toggle-favourite' event has been emitted without id!")
+                console.log("Warning! 'toggle-favourite' event has been emitted without id!");
                 return false;
             }
         },
+        "delete-friend": function (id: string) {
+            if (id) {
+                return true;
+            } else {
+                console.log("Warning! 'delete-friend' event has been emitted without id!");
+                return false;
+            }
+        }
     },
     data() {
         return {
@@ -64,6 +74,9 @@ export default defineComponent({
         toggleIsFavourite(): void {
             this.$emit("toggle-favourite", this.id);
         },
+        deleteFriend(): void {
+            this.$emit("delete-friend", this.id);
+        }
     },
 });
 </script>

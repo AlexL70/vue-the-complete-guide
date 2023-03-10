@@ -7,7 +7,7 @@
         <ul>
             <friend-contact v-for="friend in friends" :key="friend.id" :id="friend.id" :name="friend.name"
                 :phoneNumber="friend.phone" :emailAddress="friend.email" :isFavourite="friend.isFavourite"
-                @toggle-favourite="toggleFavouriteStatus"></friend-contact>
+                @toggle-favourite="toggleFavouriteStatus" @delete-friend="deleteFriend"></friend-contact>
         </ul>
     </section>
 </template>
@@ -53,7 +53,15 @@ export default defineComponent({
             nf.email = "";
             nf.name = "";
             nf.phone = "";
-        }
+        },
+        deleteFriend(friendId: string) {
+            const friend = this.friends.find(friend => friend.id === friendId);
+            if (friend) {
+                let index = this.friends.indexOf(friend);
+                if (index)
+                    this.friends.splice(index, 1);
+            }
+        },
     }
 });
 </script>
