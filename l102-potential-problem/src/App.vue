@@ -1,10 +1,8 @@
 <template>
   <div>
-    <active-element
-      :topic-title="activeTopic && activeTopic.title"
-      :text="activeTopic && activeTopic.fullText"
-    ></active-element>
-    <knowledge-base :topics="topics" @select-topic="activateTopic"></knowledge-base>
+    <active-element :topic-title="activeTopic && activeTopic.title"
+      :text="activeTopic && activeTopic.fullText"></active-element>
+    <knowledge-base @select-topic="activateTopic"></knowledge-base>
   </div>
 </template>
 
@@ -32,11 +30,27 @@ export default {
       activeTopic: null,
     };
   },
+  provide() {
+    return {
+      topics: this.topics,
+    };
+  },
   methods: {
     activateTopic(topicId) {
       this.activeTopic = this.topics.find((topic) => topic.id === topicId);
     },
   },
+  mounted() {
+    setTimeout(() => {
+      this.topics.push({
+        id: 'events',
+        title: 'Events',
+        description: "Events is an importent part of Vue.js reacitvity",
+        fullText: "Events in allow you to trigger code on demand.",
+      });
+    }, 3000)
+    console.log("mounted");
+  }
 };
 </script>
 
@@ -44,12 +58,15 @@ export default {
 * {
   box-sizing: border-box;
 }
+
 html {
   font-family: sans-serif;
 }
+
 body {
   margin: 0;
 }
+
 section {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 2rem auto;
