@@ -2,7 +2,7 @@
   <div>
     <active-element :topic-title="activeTopic && activeTopic.title"
       :text="activeTopic && activeTopic.fullText"></active-element>
-    <knowledge-base @select-topic="activateTopic"></knowledge-base>
+    <knowledge-base></knowledge-base>
   </div>
 </template>
 
@@ -33,6 +33,7 @@ export default {
   provide() {
     return {
       topics: this.topics,
+      onSelectTopic: this.activateTopic,
     };
   },
   methods: {
@@ -49,7 +50,6 @@ export default {
         fullText: "Events in allow you to trigger code on demand.",
       });
     }, 3000)
-    console.log("mounted");
   }
 };
 </script>
