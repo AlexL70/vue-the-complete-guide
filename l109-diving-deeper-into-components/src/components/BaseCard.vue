@@ -1,11 +1,23 @@
 <template>
     <div>
-        <header>
-            <slot name="header"></slot>
+        <header v-if="$slots.header">
+            <slot name="header">
+                <!-- default slot content is rendered in cases when there is no actual
+                content provided for this particular slot by wrapper element -->
+                <!--h2>The Default</h2-->
+            </slot>
         </header>
         <slot></slot>
     </div>
 </template>
+
+<script>
+export default {
+    mounted() {
+        console.log(this.$slots.header);
+    }
+};
+</script>
 
 <style scoped>
 div {
