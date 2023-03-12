@@ -1,17 +1,19 @@
 <template>
     <ul>
-        <li v-for="r in stroredResources" :key="r.id">
-            <a :href="r.link">{{ r.title }}</a>
-        </li>
+        <learning-resource v-for="r in stroredResources" :key="r.id" :res="r"></learning-resource>
     </ul>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { Resource } from "./types/DtoInterfaces"
+import LearningResource from "./components/learning-resources/LearningResource.vue"
 
 export default defineComponent({
     name: "App",
+    components: {
+        LearningResource,
+    },
     data() {
         return {
             stroredResources: [
