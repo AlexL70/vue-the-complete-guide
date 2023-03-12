@@ -3,7 +3,9 @@
     <TheHeader />
     <button @click="setSelectedComponent('active-goals')">Active Goals</button>
     <button @click="setSelectedComponent('manage-goals')">Manage Goals</button>
-    <component :is="selectedComponent"></component>
+    <KeepAlive>
+      <component :is="selectedComponent"></component>
+    </KeepAlive>
     <!--the-header></!--the-header-->
     <!--badge-list></badge-list>
     <user-info :full-name="activeUser.name" :info-text="activeUser.description" :role="activeUser.role"></user-info>
