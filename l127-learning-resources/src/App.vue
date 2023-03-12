@@ -1,22 +1,20 @@
 <template>
-    <ul>
-        <learning-resource v-for="r in stroredResources" :key="r.id" :res="r"></learning-resource>
-    </ul>
+    <stored-resources :resources="storedResources"></stored-resources>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import type { Resource } from "./types/DtoInterfaces"
-import LearningResource from "./components/learning-resources/LearningResource.vue"
+import type { Resource } from "./types/DtoInterfaces";
+import StoredResources from "./components/learning-resources/StoredResources.vue";
 
 export default defineComponent({
     name: "App",
     components: {
-        LearningResource,
+        StoredResources,
     },
     data() {
         return {
-            stroredResources: [
+            storedResources: [
                 {
                     id: "official-guide",
                     title: "Official guide",
@@ -34,3 +32,19 @@ export default defineComponent({
     },
 });
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    margin: 0;
+}
+</style>
