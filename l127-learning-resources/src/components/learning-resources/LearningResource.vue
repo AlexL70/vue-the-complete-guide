@@ -3,7 +3,7 @@
         <base-card>
             <header>
                 <h3>{{ res.title }}</h3>
-                <base-button mode="flat">Delete</base-button>
+                <base-button mode="flat" @click="onDeleteResource">Delete</base-button>
             </header>
             <p>{{ res.description }}</p>
             <nav>
@@ -23,6 +23,15 @@ export default defineComponent({
             required: true,
         }
     },
+    emits: {
+        "delete-resource": function (id: string) { return true; }
+    },
+    methods: {
+        onDeleteResource() {
+            console.log("Emit delete event:", this.res.id);
+            this.$emit("delete-resource", this.res.id);
+        }
+    }
 });
 </script>
 

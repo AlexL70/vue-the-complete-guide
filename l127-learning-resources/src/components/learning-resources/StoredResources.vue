@@ -1,6 +1,6 @@
 <template>
     <ul>
-        <learning-resource v-for="r in resources" :res="r"></learning-resource>
+        <learning-resource v-for="r in resources" :res="r" @delete-resource="onDeleteResource"></learning-resource>
     </ul>
 </template>
 
@@ -14,6 +14,15 @@ export default defineComponent({
             from: "resources",
             type: Object as PropType<Array<Resource>>,
         },
+    },
+    emits: {
+        "delete-resource": function (id: string) { return true; }
+    },
+    methods: {
+        onDeleteResource(id: string) {
+            console.log("Catch and re-emit delete event:", id);
+            this.$emit("delete-resource", id);
+        }
     },
     components: {
         LearningResource,

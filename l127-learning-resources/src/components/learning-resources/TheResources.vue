@@ -6,7 +6,7 @@
             Add Resource</base-button>
     </base-card>
     <keep-alive>
-        <component :is="selectedTab" @add-resource="onAddResource"></component>
+        <component :is="selectedTab" @delete-resource="onDeleteResource" @add-resource="onAddResource"></component>
     </keep-alive>
 </template>
 
@@ -57,7 +57,13 @@ export default defineComponent({
             r.description = "";
             r.link = "";
             this.selectedTab = "stored-resources";
-        }
+        },
+        onDeleteResource(id: string) {
+            const index = this.storedResources.findIndex((r) => { return r.id === id; });
+            if (index >= 0) {
+                this.storedResources.splice(index, 1);
+            }
+        },
     },
     computed: {
         storedResButtonMode(): "flat" | "" {
