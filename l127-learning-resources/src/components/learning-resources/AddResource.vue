@@ -1,4 +1,13 @@
 <template>
+    <base-dialog v-if="inputIsInvalid" title="Invalid input!" @close-dialog="hideDialog">
+        <template #default>
+            <p>Unfortunately, at least one input value is empty.</p>
+            <p>Please make sure you filled them all and try again.</p>
+        </template>
+        <template #actions>
+            <base-button @click="hideDialog">OK</base-button>
+        </template>
+    </base-dialog>
     <base-card>
         <form @submit.prevent="submitData">
             <div class="form-control">
@@ -32,21 +41,26 @@ export default defineComponent({
                 description: "",
                 link: "",
             } as Resource,
+            inputIsInvalid: false,
         };
     },
     emits: {
         "add-resource": function (r: Resource) {
-            if (r.title.length === 0 || r.description.length === 0 || r.link.length === 0) {
-                console.log("Resources with empty properties are not allowed.");
-                return false;
-            } else {
-                return true;
-            }
-        }
+            return true;
+        },
     },
     methods: {
         submitData(): void {
+            if (this.newResource.title.trim().length === 0
+                || this.newResource.description.trim().length === 0
+                || this.newResource.link.trim().length === 0) {
+                this.inputIsInvalid = true;
+                return;
+            }
             this.$emit("add-resource", this.newResource);
+        },
+        hideDialog() {
+            this.inputIsInvalid = false;
         },
     },
 });
