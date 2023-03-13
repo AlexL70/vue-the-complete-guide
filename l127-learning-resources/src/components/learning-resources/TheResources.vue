@@ -1,13 +1,16 @@
 <template>
     <base-card>
-        <base-button @click="setSelectedTab('stored-resources')">Stored Resources</base-button>
-        <base-button @click="setSelectedTab('add-resource')">Add Resource</base-button>
+        <base-button @click="setSelectedTab('stored-resources')" :mode="storedResButtonMode">
+            Stored Resources</base-button>
+        <base-button @click="setSelectedTab('add-resource')" :mode="addResButtonMode">
+            Add Resource</base-button>
     </base-card>
     <component :is="selectedTab"></component>
 </template>
 
 <script lang="ts">
 export type SelectedTab = "stored-resources" | "add-resource";
+import type { Resource } from "./../../types/DtoInterfaces"
 import { defineComponent } from 'vue';
 import StoredResources from "./StoredResources.vue";
 import AddResource from "./AddResource.vue";
@@ -15,11 +18,38 @@ export default defineComponent({
     data() {
         return {
             selectedTab: "stored-resources" as SelectedTab,
+            storedResources: [
+                {
+                    id: "official-guide",
+                    title: "Official guide",
+                    description: "The official Vue.js documentation",
+                    link: "https://vuejs.org",
+                },
+                {
+                    id: "google",
+                    title: "Google",
+                    description: "Learn to google...",
+                    link: "https://google.com",
+                }
+            ] as Array<Resource>,
+        };
+    },
+    provide() {
+        return {
+            resources: this.storedResources,
         };
     },
     methods: {
         setSelectedTab(tab: SelectedTab) {
             this.selectedTab = tab;
+        }
+    },
+    computed: {
+        storedResButtonMode(): "flat" | "" {
+            return this.selectedTab === 'stored-resources' ? '' : 'flat';
+        },
+        addResButtonMode(): "flat" | "" {
+            return this.selectedTab === 'add-resource' ? '' : 'flat';
         }
     },
     components: {

@@ -1,20 +1,19 @@
 <template>
     <ul>
-        <learning-resource v-for="r in resources" :key="r.id" :res="r"></learning-resource>
+        <learning-resource v-for="r in resources" :res="r"></learning-resource>
     </ul>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import type { PropType } from 'vue';
+import { defineComponent, inject, type PropType } from 'vue';
 import type { Resource } from "./../../types/DtoInterfaces"
 import LearningResource from "./LearningResource.vue";
 export default defineComponent({
-    props: {
+    inject: {
         resources: {
+            from: "resources",
             type: Object as PropType<Array<Resource>>,
-            required: true,
-        }
+        },
     },
     components: {
         LearningResource,
