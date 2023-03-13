@@ -1,8 +1,9 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-control">
+    <div class="form-control" :class="{ invalid: userNameValidity === 'invalid' }">
       <label for="user-name">Your Name</label>
-      <input id="user-name" name="user-name" type="text" v-model.lazy="userName" />
+      <input @blur="validateUserName" id="user-name" name="user-name" type="text" v-model.trim="userName" />
+      <p class="error" v-if="userNameValidity === 'invalid'">Invalid user name.</p>
     </div>
     <div class="form-control">
       <label for="age">Your Age (Years)</label>
@@ -61,6 +62,7 @@ export default {
   data() {
     return {
       userName: "",
+      userNameValidity: "pending",
       userAge: null,
       referrer: "google",
       interest: [],
@@ -84,8 +86,16 @@ export default {
       this.how = null;
       console.log(`Confirm: ${this.confirm}`);
       this.confirm = false;
-    }
+    },
+    validateUserName() {
+      console.log("blur");
+      if (this.userName === "")
+        this.userNameValidity = "invalid";
+      else
+        this.userNameValidity = "valid";
+    },
   },
+
 }
 </script>
 
@@ -134,6 +144,18 @@ input[type='radio'] {
 input[type='checkbox']+label,
 input[type='radio']+label {
   font-weight: normal;
+}
+
+.form-control.invalid input {
+  border-color: red;
+}
+
+.form-control.invalid label {
+  color: red;
+}
+
+p.error {
+  color: darkred;
 }
 
 button {
