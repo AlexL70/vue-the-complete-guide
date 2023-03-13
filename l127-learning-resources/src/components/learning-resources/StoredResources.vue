@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, type PropType } from 'vue';
+import { defineComponent, type PropType } from 'vue';
 import type { Resource } from "./../../types/DtoInterfaces"
 import LearningResource from "./LearningResource.vue";
 export default defineComponent({
