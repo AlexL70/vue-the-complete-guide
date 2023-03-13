@@ -1,6 +1,6 @@
 <template>
     <li>
-        <div>
+        <base-card>
             <header>
                 <h3>{{ res.title }}</h3>
                 <button>Delete</button>
@@ -9,7 +9,7 @@
             <nav>
                 <a :href="res.link">View Resource</a>
             </nav>
-        </div>
+        </base-card>
     </li>
 </template>
 
@@ -22,7 +22,7 @@ export default defineComponent({
             type: Object as PropType<Resource>,
             required: true,
         }
-    }
+    },
 });
 </script>
 
