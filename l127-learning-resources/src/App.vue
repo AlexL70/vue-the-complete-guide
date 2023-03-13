@@ -1,18 +1,18 @@
 <template>
     <the-header title="Remember Me!"></the-header>
-    <stored-resources :resources="storedResources"></stored-resources>
+    <the-resource :resources="storedResources"></the-resource>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { Resource } from "./types/DtoInterfaces";
-import StoredResources from "./components/learning-resources/StoredResources.vue";
+import TheResource from "./components/learning-resources/TheResources.vue";
 import TheHeader from "./components/layouts/TheHeader.vue"
 
 export default defineComponent({
     name: "App",
     components: {
-        StoredResources, TheHeader,
+        TheResource, TheHeader,
     },
     data() {
         return {
