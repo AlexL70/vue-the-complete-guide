@@ -3,7 +3,7 @@
         <base-card>
             <header>
                 <h3>{{ res.title }}</h3>
-                <button>Delete</button>
+                <base-button mode="flat">Delete</base-button>
             </header>
             <p>{{ res.description }}</p>
             <nav>
