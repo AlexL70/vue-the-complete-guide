@@ -1,17 +1,17 @@
 <template>
     <base-card>
-        <form>
+        <form @submit.prevent="submitData">
             <div class="form-control">
-                <lable for="title">Title:</lable>
-                <input type="text" id="title" name="title" :v-model="newResource.title" />
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" v-model="newResource.title" />
             </div>
             <div class="form-control">
-                <lable for="description">Description:</lable>
-                <textarea id="description" name="description" rows="3" :v-model="newResource.description"></textarea>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="3" v-model="newResource.description"></textarea>
             </div>
             <div class="form-control">
-                <lable for="link">Link:</lable>
-                <input type="url" id="link" name="link" :v-model="newResource.link" />
+                <label for="link">Link:</label>
+                <input type="url" id="link" name="link" v-model="newResource.link" />
             </div>
             <div>
                 <base-button type="submit">Add Resource</base-button>
@@ -26,9 +26,29 @@ import type { Resource } from "./../../types/DtoInterfaces";
 export default defineComponent({
     data() {
         return {
-            newResource: {} as Resource,
+            newResource: {
+                id: "",
+                title: "",
+                description: "",
+                link: "",
+            } as Resource,
         };
-    }
+    },
+    emits: {
+        "add-resource": function (r: Resource) {
+            if (r.title.length === 0 || r.description.length === 0 || r.link.length === 0) {
+                console.log("Resources with empty properties are not allowed.");
+                return false;
+            } else {
+                return true;
+            }
+        }
+    },
+    methods: {
+        submitData(): void {
+            this.$emit("add-resource", this.newResource);
+        },
+    },
 });
 </script>
 

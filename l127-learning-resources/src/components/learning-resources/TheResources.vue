@@ -1,11 +1,13 @@
 <template>
     <base-card>
-        <base-button @click="setSelectedTab('stored-resources')" :mode="storedResButtonMode">
+        <base-button @click="setSelectedTab('stored-resources')" type="button" :mode="storedResButtonMode">
             Stored Resources</base-button>
-        <base-button @click="setSelectedTab('add-resource')" :mode="addResButtonMode">
+        <base-button @click="setSelectedTab('add-resource')" type="button" :mode="addResButtonMode">
             Add Resource</base-button>
     </base-card>
-    <component :is="selectedTab"></component>
+    <keep-alive>
+        <component :is="selectedTab" @add-resource="onAddResource"></component>
+    </keep-alive>
 </template>
 
 <script lang="ts">
@@ -42,6 +44,19 @@ export default defineComponent({
     methods: {
         setSelectedTab(tab: SelectedTab) {
             this.selectedTab = tab;
+        },
+        onAddResource(r: Resource) {
+            const newRes = {
+                id: crypto.randomUUID(),
+                title: r.title,
+                description: r.description,
+                link: r.link,
+            } as Resource;
+            this.storedResources.unshift(newRes);
+            r.title = "";
+            r.description = "";
+            r.link = "";
+            this.selectedTab = "stored-resources";
         }
     },
     computed: {
