@@ -20,7 +20,8 @@
           <input type="radio" id="rating-great" value="great" name="rating" v-model="chosenRating" />
           <label for="rating-great">Great</label>
         </div>
-        <p v-if="invalidInput">One or more input fields are invalid. Please check your provided data.</p>
+        <p class="error" v-if="invalidInput">One or more input fields are invalid. Please check your provided data.</p>
+        <p class="error" v-if="serverError">{{ serverError }}</p>
         <div>
           <base-button>Submit</base-button>
         </div>
@@ -36,6 +37,7 @@ export default {
       enteredName: '',
       chosenRating: null,
       invalidInput: false,
+      serverError: null,
     };
   },
   emits: ['survey-submit'],
@@ -46,11 +48,7 @@ export default {
         return;
       }
       this.invalidInput = false;
-
-      //this.$emit('survey-submit', {
-      //  userName: this.enteredName,
-      //  rating: this.chosenRating,
-      //});
+      this.serverError = null;
 
       fetch("https://vue-http-demo-d9ba8-default-rtdb.europe-west1.firebasedatabase.app/surveys.json",
         {
@@ -62,10 +60,20 @@ export default {
             name: this.enteredName,
             rating: this.chosenRating,
           }),
+        }).then(result => {
+          console.log(result);
+          if (result.ok) {
+            this.enteredName = '';
+            this.chosenRating = null;
+          }
+          else {
+            this.serverError = `Server returned an error: ${result.status} - ${result.statusText}. Try again later.`;
+          }
+        }).catch(error => {
+          console.log(error);
+          this.serverError = `Server returned an error: ${error}. Try again later.`;
         });
 
-      this.enteredName = '';
-      this.chosenRating = null;
     },
   },
 };
@@ -80,5 +88,9 @@ input[type='text'] {
   display: block;
   width: 20rem;
   margin-top: 0.5rem;
+}
+
+.error {
+  color: #cc2222
 }
 </style>
