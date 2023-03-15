@@ -95,38 +95,40 @@ button:active {
 
 .animate {
   /* transform: translateX(-150px); */
-  animation: slide-fade 1s ease-in-out forwards;
+  animation: slide-scale 1s ease-in-out forwards;
 }
 
-.v-enter-from {
+/* .v-enter-from {
   opacity: 0;
   transform: translateY(-20px) scale(0.8);
-}
+} */
 
 .v-enter-active {
-  transition: all 0.5s ease-in-out;
+  /* transition: all 0.5s ease-in-out; */
+  animation: slide-scale 0.5s ease-in-out;
 }
 
-.v-enter-to {
+/* .v-enter-to {
   opacity: 1;
   transform: translateY(0px) scale(1);
-}
+} */
 
-.v-leave-from {
+/* .v-leave-from {
   opacity: 1;
   transform: translateY(0px) scale(1);
-}
+} */
 
 .v-leave-active {
-  transition: all 0.5s ease-in-out;
+  /* transition: all 0.5s ease-in-out; */
+  animation: slide-scale 0.5s ease-in-out;
 }
 
-.v-leave-to {
+/* .v-leave-to {
   opacity: 0;
   transform: translateY(20px) scale(0.8);
-}
+} */
 
-@keyframes slide-fade {
+@keyframes slide-scale {
   0% {
     transform: translateX(0) scale(1);
   }
