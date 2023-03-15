@@ -98,6 +98,34 @@ button:active {
   animation: slide-fade 1s ease-in-out forwards;
 }
 
+.v-enter-from {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.8);
+}
+
+.v-enter-active {
+  transition: all 0.5s ease-in-out;
+}
+
+.v-enter-to {
+  opacity: 1;
+  transform: translateY(0px) scale(1);
+}
+
+.v-leave-from {
+  opacity: 1;
+  transform: translateY(0px) scale(1);
+}
+
+.v-leave-active {
+  transition: all 0.5s ease-in-out;
+}
+
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+}
+
 @keyframes slide-fade {
   0% {
     transform: translateX(0) scale(1);
