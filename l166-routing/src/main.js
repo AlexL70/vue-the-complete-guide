@@ -20,7 +20,9 @@ const router = createRouter({
             ]
         },
         {
-            path: "/users", components: { default: UsersList, footer: UsersFooter },
+            path: "/users",
+            components: { default: UsersList, footer: UsersFooter },
+            meta: { needsAuth: true },
             beforeEnter(to, from, next) {
                 console.log("Before entering users:", to, from);
                 next();
@@ -41,6 +43,10 @@ const router = createRouter({
 
 router.beforeEach(function (to, from, next) {
     console.log("Before navigate (global)", to, from);
+    if (to.meta.needsAuth) {
+        // TODO - Add processing auth later
+        console.log("Authentication required!");
+    }
     //if (to.name !== "teams") {
     //    next({ name: "teams", params: {} });
     //    return;
