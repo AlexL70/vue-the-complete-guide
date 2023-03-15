@@ -4,7 +4,7 @@
     <button @click="animateBlock">Animate</button>
   </div>
   <div class="container">
-    <transition>
+    <transition name="para">
       <p v-if="paraIsVisible">This is only sometimes visible...</p>
     </transition>
     <button @click="toggleParaghaph">Toggle the paragraph</button>
@@ -103,10 +103,13 @@ button:active {
   transform: translateY(-20px) scale(0.8);
 } */
 
-.v-enter-active {
-  /* transition: all 0.5s ease-in-out; */
-  animation: slide-scale 0.5s ease-in-out;
+.para-enter-active {
+  animation: fade-in 0.3s ease-in;
 }
+
+/* .v-enter-active {
+  transition: all 0.5s ease-in-out;
+} */
 
 /* .v-enter-to {
   opacity: 1;
@@ -118,10 +121,13 @@ button:active {
   transform: translateY(0px) scale(1);
 } */
 
-.v-leave-active {
-  /* transition: all 0.5s ease-in-out; */
-  animation: slide-scale 0.5s ease-in-out;
+.para-leave-active {
+  animation: fade-out 0.3s ease-out;
 }
+
+/* .v-leave-active {
+  transition: all 0.5s ease-in-out;
+} */
 
 /* .v-leave-to {
   opacity: 0;
@@ -139,6 +145,40 @@ button:active {
 
   100% {
     transform: translateX(-150px) scale(1);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translate(-20px, -20px) scale(0.6);
+  }
+
+  60% {
+    opacity: 0.7;
+    transform: translate(-10px, -10px) scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: translate(0px, 0px) scale(1);
+  }
+
+  60% {
+    opacity: 0.7;
+    transform: translate(10px, 10px) scale(0.8);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(20px, 20px) scale(0.6);
   }
 }
 </style>
