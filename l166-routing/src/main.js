@@ -48,6 +48,11 @@ router.beforeEach(function (to, from, next) {
     next();
 });
 
+router.afterEach(function (to, from) {
+    // This hook is nice for logging navigations, for instance.
+    console.log("After navigate (global)", to, from);
+});
+
 const app = createApp(App)
 app.use(router);
 app.mount('#app');
