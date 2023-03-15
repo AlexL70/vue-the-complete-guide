@@ -68,7 +68,7 @@ button:active {
   height: 8rem;
   background-color: #290033;
   margin-bottom: 2rem;
-  transition: transform 0.8s ease-in-out;
+  /* transition: transform 0.8s ease-in-out; */
 }
 
 .container {
@@ -84,6 +84,21 @@ button:active {
 }
 
 .animate {
-  transform: translateX(-150px);
+  /* transform: translateX(-150px); */
+  animation: slide-fade 1s ease-in-out forwards;
+}
+
+@keyframes slide-fade {
+  0% {
+    transform: translateX(0) scale(1);
+  }
+
+  70% {
+    transform: translateX(-120px) scale(1.2);
+  }
+
+  100% {
+    transform: translateX(-150px) scale(1);
+  }
 }
 </style>
