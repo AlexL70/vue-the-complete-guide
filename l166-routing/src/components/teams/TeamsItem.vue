@@ -11,7 +11,8 @@ export default {
   props: ['id', 'name', 'memberCount'],
   computed: {
     membersLink() {
-      return `/teams/${this.id}`;
+      return { name: "team-members", params: { teamId: this.id } };
+      //return `/teams/${this.id}`;
     }
   }
 };
