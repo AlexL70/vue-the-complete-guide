@@ -40,6 +40,14 @@ export default {
   created() {
     this.loadTeamMembers(this.teamId);
   },
+  beforeRouteUpdate(to, from, next) {
+    // This could be used to call loadTeamMembers
+    // instead of watching teamId property, but this way
+    // we would make th component dependent on router
+    console.log("TeamMembers component beforeRouteUpdate");
+    console.log(to, from);
+    next();
+  },
   watch: {
     teamId(newValue) {
       this.loadTeamMembers(newValue);

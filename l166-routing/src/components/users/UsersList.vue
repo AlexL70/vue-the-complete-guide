@@ -19,7 +19,11 @@ export default {
       // need to navigate to teams
       this.$router.push({ name: "teams", query: { sort: "asc" } });
     },
-  }
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log("Before entering UserList component.", to, from);
+    next();
+  },
 };
 </script>
 
