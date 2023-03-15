@@ -23,14 +23,23 @@ const router = createRouter({
         { path: "/:notFound(.*)", component: NotFound },
     ],
     linkActiveClass: "active-link",
-    scrollBehavior(to, from, savedPosition) {
-        console.log("To:", to);
-        console.log("From:", from);
-        console.log("Position:", savedPosition);
+    scrollBehavior(_, _2, savedPosition) {
+        //console.log("To:", to);
+        //console.log("From:", from);
+        //console.log("Position:", savedPosition);
         if (savedPosition)
             return savedPosition;
         return { left: 0, top: 0 };
     },
+});
+
+router.beforeEach(function (to, from, next) {
+    console.log("Before navigate (global)", to, from);
+    //if (to.name !== "teams") {
+    //    next({ name: "teams", params: {} });
+    //    return;
+    //}
+    next();
 });
 
 const app = createApp(App)
