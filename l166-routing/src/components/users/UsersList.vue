@@ -17,7 +17,7 @@ export default {
     confirmInput() {
       // do something important
       // need to navigate to teams
-      this.$router.push({ name: "teams" });
+      this.$router.push({ name: "teams", query: { sort: "asc" } });
     },
   }
 };

@@ -14,6 +14,9 @@ export default {
     TeamsItem,
   },
   inject: ['teams'],
+  created() {
+    console.log(this.$route.query);
+  },
 };
 </script>
 
