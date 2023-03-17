@@ -12,6 +12,9 @@
     <button @click="toggleParaghaph">Toggle the paragraph</button>
   </div>
   <div class="container">
+    <list-data></list-data>
+  </div>
+  <div class="container">
     <transition name="fade-button" mode="out-in">
       <button @click="hideUsers" v-if="usersAreVisible">Hide Users</button>
       <button @click="showUsers" v-else>Show Users</button>
@@ -27,7 +30,9 @@
 </template>  
 
 <script>
+import ListData from "./components/ListData.vue";
 export default {
+  components: { ListData, },
   data() {
     return {
       animatedBlock: false,
