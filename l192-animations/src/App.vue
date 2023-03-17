@@ -5,7 +5,8 @@
   </div>
   <div class="container">
     <transition name="para" @before-enter="beforeEnter" @before-leave="beforeLeave" @enter="enter" @leave="leave"
-      @after-enter="afterEnter" @after-leave="afterLeave">
+      @after-enter="afterEnter" @after-leave="afterLeave" @enter-cancelled="enterCancelled"
+      @leave-cancelled="leaveCancelled">
       <p v-if="paraIsVisible">This is only sometimes visible...</p>
     </transition>
     <button @click="toggleParaghaph">Toggle the paragraph</button>
@@ -33,26 +34,58 @@ export default {
       dialogIsVisible: false,
       paraIsVisible: false,
       usersAreVisible: false,
+      leaveInterval: null,
+      enterInterval: null,
     };
   },
   methods: {
     beforeEnter(el) {
       console.log("Before entering transition.", el);
+      el.style.opacity = 0;
     },
     beforeLeave(el) {
       console.log("Before leaving transition.", el);
+      el.style.opacity = 1;
     },
-    enter(el) {
+    enter(el, done) {
       console.log("Enter transition.", el);
+      let round = 1;
+      this.enterInterval = setInterval(() => {
+        round++;
+        el.style.opacity = round * 0.01;
+        if (round >= 100) {
+          clearInterval(this.enterInterval);
+          done();
+        }
+      }, 5);
     },
-    leave(el) {
+    leave(el, done) {
       console.log("Leave transition.", el);
+      let round = 100;
+      this.leaveInterval = setInterval(() => {
+        round--;
+        el.style.opacity = round * 0.01;
+        if (round <= 1) {
+          clearInterval(this.leaveInterval);
+          done();
+        }
+      }, 5);
     },
     afterEnter(el) {
       console.log("After entering transition", el);
+      el.style.opacity = 1;
     },
     afterLeave(el) {
       console.log("After leaving transition.", el);
+      el.style.opacity = 0;
+    },
+    enterCancelled(el) {
+      console.log("Enter cancelled", el);
+      clearInterval(this.enterInterval);
+    },
+    leaveCancelled(el) {
+      console.log("Leave cancelled", el);
+      clearInterval(this.leaveInterval);
     },
     animateBlock() {
       this.animatedBlock = true;
@@ -129,42 +162,6 @@ button:active {
   /* transform: translateX(-150px); */
   animation: slide-scale 1s ease-in-out forwards;
 }
-
-/* .v-enter-from {
-  opacity: 0;
-  transform: translateY(-20px) scale(0.8);
-} */
-
-.para-enter-active {
-  animation: fade-in 0.3s ease-in;
-}
-
-/* .v-enter-active {
-  transition: all 0.5s ease-in-out;
-} */
-
-/* .v-enter-to {
-  opacity: 1;
-  transform: translateY(0px) scale(1);
-} */
-
-/* .v-leave-from {
-  opacity: 1;
-  transform: translateY(0px) scale(1);
-} */
-
-.para-leave-active {
-  animation: fade-out 0.3s ease-out;
-}
-
-/* .v-leave-active {
-  transition: all 0.5s ease-in-out;
-} */
-
-/* .v-leave-to {
-  opacity: 0;
-  transform: translateY(20px) scale(0.8);
-} */
 
 .fade-button-enter-from,
 .fade-button-leave-to {
