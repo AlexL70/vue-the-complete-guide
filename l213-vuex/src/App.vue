@@ -21,8 +21,8 @@ export default {
       // commented out code works as good as used in this method
       // it is matter of taste wich approach to use
       //this.$store.commit("addToCounter", { value: 5 });
-      this.$store.commit({
-        type: "addToCounter",
+      this.$store.dispatch({
+        type: "increase",
         value: 5,
       });
     },
