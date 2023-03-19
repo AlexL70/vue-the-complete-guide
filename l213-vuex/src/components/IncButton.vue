@@ -3,11 +3,13 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
     methods: {
-        incCounter() {
-            this.$store.commit("incCounter");
-        }
+        ...mapActions({ incCounter: "incCounter" }),
+        //incCounter() {
+        //    this.$store.commit("incCounter");
+        //}
     }
 }
 </script>
