@@ -1,9 +1,12 @@
 <template>
-  <base-container title="Vuex">
+  <base-container title="Vuex" v-if="isAuth">
     <the-counter></the-counter>
     <the-norm-counter></the-norm-counter>
     <button @click="incCounter"> Add 5 </button>
     <inc-button></inc-button>
+  </base-container>
+  <base-container title="Authentication">
+    <user-auth></user-auth>
   </base-container>
 </template>
 
@@ -12,9 +15,11 @@ import BaseContainer from './components/BaseContainer.vue';
 import TheCounter from './components/TheCounter.vue';
 import TheNormCounter from './components/TheNormCounter.vue';
 import IncButton from './components/IncButton.vue';
+import UserAuth from './components/UserAuth.vue'
+import { mapGetters } from 'vuex';
 export default {
   components: {
-    BaseContainer, TheCounter, TheNormCounter, IncButton,
+    BaseContainer, TheCounter, TheNormCounter, IncButton, UserAuth
   },
   methods: {
     incCounter() {
@@ -27,6 +32,9 @@ export default {
       });
     },
   },
+  computed: {
+    ...mapGetters({ isAuth: "userIsAuthenticated" }),
+  }
 };
 </script>
 
