@@ -27,7 +27,7 @@ export default {
       // it is matter of taste wich approach to use
       //this.$store.commit("addToCounter", { value: 5 });
       this.$store.dispatch({
-        type: "increase",
+        type: "cm/increase",
         value: 5,
       });
     },

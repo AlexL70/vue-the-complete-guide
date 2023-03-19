@@ -4,6 +4,7 @@ import { createStore } from 'vuex';
 import App from './App.vue';
 
 const counterModule = {
+    namespaced: true,
     state() {
         return {
             counter: 0,
@@ -21,12 +22,12 @@ const counterModule = {
         increment(context) {
             setTimeout(() => {
                 context.commit("incCounter");
-            }, 2000)
+            }, 300)
         },
         increase(context, payload) {
             setTimeout(() => {
                 context.commit("addToCounter", payload);
-            }, 500);
+            }, 300);
         },
     },
     getters: {
