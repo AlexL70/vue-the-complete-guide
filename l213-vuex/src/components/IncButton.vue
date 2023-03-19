@@ -6,7 +6,7 @@
 import { mapActions } from 'vuex';
 export default {
     methods: {
-        ...mapActions({ incCounter: "incCounter" }),
+        ...mapActions({ incCounter: "increment" }),
         //incCounter() {
         //    this.$store.commit("incCounter");
         //}
