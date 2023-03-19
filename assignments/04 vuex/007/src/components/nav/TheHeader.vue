@@ -25,8 +25,15 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
-  inject: ['isLoggedIn', 'login', 'logout', 'cart'],
+  computed: {
+    ...mapGetters({ isLoggedIn: "isAuthenticated" }),
+  },
+  methods: {
+    ...mapActions({ login: "login", logout: "logout" }),
+  },
+  inject: ['cart'],
 };
 </script>
 
