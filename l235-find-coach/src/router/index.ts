@@ -2,7 +2,17 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [],
+  routes: [
+    { path: "/", redirect: "/coaches" },
+    //{ path: "/coaches", component: null },
+    //{
+    //  path: "/coaches/:id", component: null, children: [
+    //    {"/constact", component: null}
+    //] },
+    //{ path: "/register", component: null },
+    //{ path: "/requests", component: null },
+    //{ path: "/:notFound(.*)", component: null },
+  ],
 });
 
 export default router;
