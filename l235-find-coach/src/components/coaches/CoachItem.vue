@@ -13,6 +13,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
+import { mapStores } from "pinia";
+import coachesStore from "../../store/coaches";
 import type { Coach } from "@/types/dto/index";
 export default defineComponent({
     props: {
@@ -22,6 +24,7 @@ export default defineComponent({
         }
     },
     computed: {
+        ...mapStores(coachesStore),
         fullName(): string {
             return `${this.coach.firstName ?? ""} ${this.coach.lastName}`;
         },

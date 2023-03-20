@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import coachesStore from "../../store/coaches";
+import coachesStore from "@/store/coaches";
 import { mapStores } from "pinia";
 import type { Coach } from "@/types/dto";
 import CoachItem from "@/components/coaches/CoachItem.vue";

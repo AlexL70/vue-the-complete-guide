@@ -31,6 +31,9 @@ const coachesStore = defineStore("coaches", {
     hasCoaches(state): boolean {
       return state.coaches && state.coaches.length > 0;
     },
+    getCoachById: (state) => {
+      return (id: string) => state.coaches.find((c) => c.id === id) ?? null;
+    },
   },
 });
 
