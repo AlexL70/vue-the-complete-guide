@@ -1,6 +1,6 @@
 <template>
     <section>
-        <h2>FILTER</h2>
+        <coach-filter @change-filter="onChangeFilter"></coach-filter>
     </section>
     <section>
         <base-card>
@@ -21,20 +21,44 @@ import { defineComponent } from "vue";
 import coachesStore from "@/store/coaches";
 import { mapStores } from "pinia";
 import type { Coach } from "@/types/dto";
+import type { SpecTagFilter } from "@/types/internal";
 import CoachItem from "@/components/coaches/CoachItem.vue";
+import CoachFilter from "@/components/coaches/CoachFilter.vue";
 export default defineComponent({
     components: {
-        CoachItem,
+        CoachItem, CoachFilter,
+    },
+    data() {
+        return {
+            activeFilters: {
+                backend: true,
+                frontend: true,
+                career: true,
+            } as SpecTagFilter,
+        };
     },
     computed: {
         ...mapStores(coachesStore),
         filteredCoaches(): Coach[] {
-            return this.coachesStore.getCoaches;
+            return this.coachesStore.getCoaches.filter(coach => {
+                if (this.activeFilters.backend && coach.areas.includes("backend"))
+                    return true;
+                if (this.activeFilters.frontend && coach.areas.includes("frontend"))
+                    return true;
+                if (this.activeFilters.career && coach.areas.includes("career"))
+                    return true;
+                return false;
+            });
         },
         hasCoaches(): boolean {
             return this.coachesStore.hasCoaches;
         }
     },
+    methods: {
+        onChangeFilter(updatedFilters: SpecTagFilter) {
+            this.activeFilters = updatedFilters;
+        }
+    }
 });
 </script>
 
