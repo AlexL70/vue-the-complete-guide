@@ -6,7 +6,7 @@
         <base-card>
             <div class="controls">
                 <base-button mode="outline">Refresh list</base-button>
-                <base-button link to="/register">Register as Coach</base-button>
+                <base-button link to="/register" v-if="!isCoach">Register as Coach</base-button>
             </div>
             <ul v-if="hasCoaches">
                 <coach-item v-for="coach in filteredCoaches" :key="coach.id" :coach="coach"></coach-item>
@@ -52,7 +52,10 @@ export default defineComponent({
         },
         hasCoaches(): boolean {
             return this.coachesStore.hasCoaches;
-        }
+        },
+        isCoach() {
+            return this.coachesStore.isCoach;
+        },
     },
     methods: {
         onChangeFilter(updatedFilters: SpecTagFilter) {

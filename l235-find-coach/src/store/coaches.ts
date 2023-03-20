@@ -1,5 +1,6 @@
 import type { Coach } from "../types/dto/index";
 import { defineStore } from "pinia";
+import userStore from "./user";
 
 const coachesStore = defineStore("coaches", {
   state: () => ({
@@ -33,6 +34,18 @@ const coachesStore = defineStore("coaches", {
     },
     getCoachById: (state) => {
       return (id: string) => state.coaches.find((c) => c.id === id) ?? null;
+    },
+    isCoach(state) {
+      const user = userStore();
+      const userId = user.getUserId;
+      return state.coaches.some((c) => c.id == userId);
+    },
+  },
+  actions: {
+    registerCoach(coach: Coach): void {
+      const user = userStore();
+      coach.id = user.getUserId;
+      this.coaches.unshift(coach);
     },
   },
 });

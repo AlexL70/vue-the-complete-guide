@@ -39,6 +39,7 @@
 import type { Coach } from "@/types/dto/index";
 import { defineComponent } from "vue";
 export default defineComponent({
+    emits: ["new-coach"],
     data() {
         return {
             newCoach: {
@@ -53,7 +54,7 @@ export default defineComponent({
     },
     methods: {
         submitForm(): void {
-            console.log(this.newCoach);
+            this.$emit("new-coach", this.newCoach);
         }
     },
 })
