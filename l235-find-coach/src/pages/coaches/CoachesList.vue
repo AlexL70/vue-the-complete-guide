@@ -8,9 +8,7 @@
             <router-link to="/register">Register as Coach</router-link>
         </div>
         <ul v-if="hasCoaches">
-            <li v-for="coach in filteredCoaches" :key="coach.id">
-                {{ coach.firstName }} {{ coach.lastName }}
-            </li>
+            <coach-item v-for="coach in filteredCoaches" :key="coach.id" :coach="coach"></coach-item>
         </ul>
         <h3 v-else>No coaches found!</h3>
     </section>
@@ -21,7 +19,11 @@ import { defineComponent } from "vue";
 import coachesStore from "../../store/coaches";
 import { mapStores } from "pinia";
 import type { Coach } from "@/types/dto";
+import CoachItem from "@/components/coaches/CoachItem.vue";
 export default defineComponent({
+    components: {
+        CoachItem,
+    },
     computed: {
         ...mapStores(coachesStore),
         filteredCoaches(): Coach[] {
@@ -33,3 +35,16 @@ export default defineComponent({
     },
 });
 </script>
+
+<style scoped>
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+}
+</style>
