@@ -2,10 +2,10 @@
     <li>
         <h3>{{ fullName }}</h3>
         <h4>{{ coach.hourlyRate }}</h4>
-        <div><span v-for="area in coach.areas" :key="area">{{ area }}</span></div>
+        <div><base-badge :title="area" :type="area" v-for="area in coach.areas" :key="area"></base-badge></div>
         <div class="actions">
-            <router-link :to="coachContactLink">Contact</router-link>
-            <router-link :to="coachDetailsLink">Details</router-link>
+            <base-button link mode="outline" :to="coachContactLink">Contact</base-button>
+            <base-button link :to="coachDetailsLink">Details</base-button>
         </div>
     </li>
 </template>

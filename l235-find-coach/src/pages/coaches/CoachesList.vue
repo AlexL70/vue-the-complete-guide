@@ -3,14 +3,16 @@
         <h2>FILTER</h2>
     </section>
     <section>
-        <div class="controls">
-            <button>Refresh list</button>
-            <router-link to="/register">Register as Coach</router-link>
-        </div>
-        <ul v-if="hasCoaches">
-            <coach-item v-for="coach in filteredCoaches" :key="coach.id" :coach="coach"></coach-item>
-        </ul>
-        <h3 v-else>No coaches found!</h3>
+        <base-card>
+            <div class="controls">
+                <base-button mode="outline">Refresh list</base-button>
+                <base-button link to="/register">Register as Coach</base-button>
+            </div>
+            <ul v-if="hasCoaches">
+                <coach-item v-for="coach in filteredCoaches" :key="coach.id" :coach="coach"></coach-item>
+            </ul>
+            <h3 v-else>No coaches found!</h3>
+        </base-card>
     </section>
 </template>
 
