@@ -5,6 +5,14 @@ const messagesStore = defineStore("messages", {
   state: () => ({
     requests: [] as MessageToCoach[],
   }),
+  getters: {
+    getRequests(state): MessageToCoach[] {
+      return state.requests;
+    },
+    hasRequests(state): boolean {
+      return state.requests && state.requests.length > 0;
+    },
+  },
   actions: {
     addRequest(message: MessageToCoach): void {
       message.id = crypto.randomUUID();
