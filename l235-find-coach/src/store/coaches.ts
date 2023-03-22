@@ -59,6 +59,27 @@ const coachesStore = defineStore("coaches", {
       }
       this.coaches.unshift(coach);
     },
+    async loadCoaches(): Promise<void> {
+      console.log("Reloading coaches...");
+      const response = await fetch(this.getUrl, {});
+      const data = await response.json();
+      if (!response.ok) {
+        // TODO - add error handling here
+      }
+      const coaches = [] as Coach[];
+      for (const key in data) {
+        const coach = {
+          id: key,
+          firstName: data[key].firstName,
+          lastName: data[key].lastName,
+          areas: data[key].areas,
+          hourlyRate: data[key].hourlyRate,
+          description: data[key].description,
+        } as Coach;
+        coaches.push(coach);
+      }
+      this.coaches = coaches;
+    },
   },
 });
 

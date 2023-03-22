@@ -5,7 +5,7 @@
     <section>
         <base-card>
             <div class="controls">
-                <base-button mode="outline">Refresh list</base-button>
+                <base-button mode="outline" @click="loadCoaches">Refresh list</base-button>
                 <base-button link to="/register" v-if="!isCoach">Register as Coach</base-button>
             </div>
             <ul v-if="hasCoaches">
@@ -60,8 +60,14 @@ export default defineComponent({
     methods: {
         onChangeFilter(updatedFilters: SpecTagFilter) {
             this.activeFilters = updatedFilters;
+        },
+        loadCoaches() {
+            this.coachesStore.loadCoaches();
         }
-    }
+    },
+    created() {
+        this.loadCoaches();
+    },
 });
 </script>
 
