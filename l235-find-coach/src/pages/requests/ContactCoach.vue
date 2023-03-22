@@ -18,7 +18,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import type { MessageToCoach } from "@/types/dto"
+import type { MessageToCoach } from "@/types/dto";
+import messageStore from "@/store/requests";
+import { mapStores } from "pinia";
 
 export default defineComponent({
     data() {
@@ -30,6 +32,9 @@ export default defineComponent({
             formIsValid: true,
         };
     },
+    computed: {
+        ...mapStores(messageStore),
+    },
     methods: {
         submitForm() {
             this.formIsValid = true;
@@ -38,6 +43,10 @@ export default defineComponent({
                 this.formIsValid = false;
                 return;
             }
+
+            this.messageToCoach.coachId = this.$route.params.id as string;
+            this.messagesStore.addRequest(this.messageToCoach);
+            this.$router.replace("/coaches");
         }
     }
 });

@@ -23,7 +23,7 @@ const coachesStore = defineStore("coaches", {
           "I am Julie and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.",
         hourlyRate: 30,
       },
-    ] as Array<Coach>,
+    ] as Coach[],
   }),
   getters: {
     getCoaches(state): Array<Coach> {
