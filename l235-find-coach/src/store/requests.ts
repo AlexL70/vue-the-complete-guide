@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import type { MessageToCoach } from "@/types/dto";
+import userStore from "./user";
 
 const messagesStore = defineStore("messages", {
   state: () => ({
@@ -7,10 +8,12 @@ const messagesStore = defineStore("messages", {
   }),
   getters: {
     getRequests(state): MessageToCoach[] {
-      return state.requests;
+      let userId = userStore().userId;
+      return state.requests.filter((r) => r.coachId === userId);
     },
     hasRequests(state): boolean {
-      return state.requests && state.requests.length > 0;
+      let userId = userStore().userId;
+      return state.requests && state.requests.some((r) => r.coachId === userId);
     },
   },
   actions: {
