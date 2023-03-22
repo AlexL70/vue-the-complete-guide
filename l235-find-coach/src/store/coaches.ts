@@ -4,6 +4,7 @@ import userStore from "./user";
 
 const coachesStore = defineStore("coaches", {
   state: () => ({
+    usrStore: userStore(),
     coaches: [
       {
         id: "c1",
@@ -26,6 +27,12 @@ const coachesStore = defineStore("coaches", {
     ] as Coach[],
   }),
   getters: {
+    getUrl(state) {
+      return `${state.usrStore.baseSrvUrl}coaches.json`;
+    },
+    getUserUrl(state) {
+      return `${state.usrStore.baseSrvUrl}coaches/${state.usrStore.userId}.json`;
+    },
     getCoaches(state): Array<Coach> {
       return state.coaches;
     },
@@ -36,15 +43,20 @@ const coachesStore = defineStore("coaches", {
       return (id: string) => state.coaches.find((c) => c.id === id) ?? null;
     },
     isCoach(state) {
-      const user = userStore();
-      const userId = user.getUserId;
-      return state.coaches.some((c) => c.id == userId);
+      return state.coaches.some((c) => c.id == state.usrStore.getUserId);
     },
   },
   actions: {
-    registerCoach(coach: Coach): void {
-      const user = userStore();
-      coach.id = user.getUserId;
+    async registerCoach(coach: Coach): Promise<void> {
+      coach.id = this.usrStore.getUserId;
+      const response = await fetch(this.getUserUrl, {
+        method: "PUT",
+        body: JSON.stringify(coach),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        // TODO - add error handling here
+      }
       this.coaches.unshift(coach);
     },
   },

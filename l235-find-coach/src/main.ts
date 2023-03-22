@@ -15,4 +15,6 @@ app.component("base-card", BaseCard);
 app.component("base-button", BaseButton);
 app.component("base-badge", BaseBadge);
 
+console.log(import.meta.env);
+
 app.mount("#app");
