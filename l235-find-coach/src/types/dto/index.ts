@@ -6,3 +6,10 @@ export interface Coach {
   description: string;
   hourlyRate: number;
 }
+
+export interface MessageToCoach {
+  id: string;
+  coachId: string;
+  email: string;
+  message: string;
+}
