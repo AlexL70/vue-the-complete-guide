@@ -5,26 +5,7 @@ import userStore from "./user";
 const coachesStore = defineStore("coaches", {
   state: () => ({
     usrStore: userStore(),
-    coaches: [
-      {
-        id: "c1",
-        firstName: "Maximilian",
-        lastName: "Schwarzmüller",
-        areas: ["frontend", "backend", "career"],
-        description:
-          "I'm Maximilian and I've worked as a freelance web developer for years. Let me help you become a developer as well!",
-        hourlyRate: 30,
-      },
-      {
-        id: "c2",
-        firstName: "Julie",
-        lastName: "Jones",
-        areas: ["frontend", "career"],
-        description:
-          "I am Julie and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.",
-        hourlyRate: 30,
-      },
-    ] as Coach[],
+    coaches: [] as Coach[],
   }),
   getters: {
     getUrl(state) {
@@ -55,7 +36,8 @@ const coachesStore = defineStore("coaches", {
       });
       const data = await response.json();
       if (!response.ok) {
-        // TODO - add error handling here
+        const error = new Error(data.message ?? "Failed to register coach!");
+        throw error;
       }
       this.coaches.unshift(coach);
     },
@@ -64,7 +46,10 @@ const coachesStore = defineStore("coaches", {
       const response = await fetch(this.getUrl, {});
       const data = await response.json();
       if (!response.ok) {
-        // TODO - add error handling here
+        const error = new Error(
+          data.message ?? "Failed to fetch list of coaches!"
+        );
+        throw error;
       }
       const coaches = [] as Coach[];
       for (const key in data) {

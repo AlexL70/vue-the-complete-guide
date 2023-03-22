@@ -1,4 +1,7 @@
 <template>
+    <base-dialog :show="error && error.length > 0" title="Error loading list of coaches!" @close="handleError">
+        <p>{{ error }}</p>
+    </base-dialog>
     <section>
         <coach-filter @change-filter="onChangeFilter"></coach-filter>
     </section>
@@ -33,6 +36,7 @@ export default defineComponent({
     },
     data() {
         return {
+            error: null as (string | null),
             isLoading: false,
             activeFilters: {
                 backend: true,
@@ -67,8 +71,15 @@ export default defineComponent({
         },
         async loadCoaches() {
             this.isLoading = true;
-            const result = await this.coachesStore.loadCoaches()
+            try {
+                await this.coachesStore.loadCoaches()
+            } catch (error: any) {
+                this.error = error.message || "Something went wrong!";
+            }
             this.isLoading = false;
+        },
+        handleError() {
+            this.error = null;
         }
     },
     created() {
