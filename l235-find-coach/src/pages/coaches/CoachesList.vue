@@ -11,6 +11,9 @@
             <ul v-if="hasCoaches">
                 <coach-item v-for="coach in filteredCoaches" :key="coach.id" :coach="coach"></coach-item>
             </ul>
+            <div v-else-if="isLoading">
+                <base-spinner></base-spinner>
+            </div>
             <h3 v-else>No coaches found!</h3>
         </base-card>
     </section>
@@ -30,6 +33,7 @@ export default defineComponent({
     },
     data() {
         return {
+            isLoading: false,
             activeFilters: {
                 backend: true,
                 frontend: true,
@@ -51,18 +55,20 @@ export default defineComponent({
             });
         },
         hasCoaches(): boolean {
-            return this.coachesStore.hasCoaches;
+            return !this.isLoading && this.coachesStore.hasCoaches;
         },
         isCoach() {
-            return this.coachesStore.isCoach;
+            return this.isLoading || this.coachesStore.isCoach;
         },
     },
     methods: {
         onChangeFilter(updatedFilters: SpecTagFilter) {
             this.activeFilters = updatedFilters;
         },
-        loadCoaches() {
-            this.coachesStore.loadCoaches();
+        async loadCoaches() {
+            this.isLoading = true;
+            const result = await this.coachesStore.loadCoaches()
+            this.isLoading = false;
         }
     },
     created() {
