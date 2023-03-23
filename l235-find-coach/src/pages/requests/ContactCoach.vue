@@ -1,4 +1,7 @@
 <template>
+    <base-dialog :show="error && error.length > 0" title="Error sending message to coach!" @close="handleError">
+        <p>{{ error }}</p>
+    </base-dialog>
     <form @submit.prevent="submitForm">
         <div class="form-control">
             <label for="email">Your email</label>
@@ -25,6 +28,7 @@ import { mapStores } from "pinia";
 export default defineComponent({
     data() {
         return {
+            error: null as (string | null),
             messageToCoach: {
                 email: "",
                 message: "",
@@ -36,7 +40,7 @@ export default defineComponent({
         ...mapStores(messageStore),
     },
     methods: {
-        submitForm() {
+        async submitForm(): Promise<void> {
             this.formIsValid = true;
             if (this.messageToCoach.email === "" || !this.messageToCoach.email.includes("@")
                 || this.messageToCoach.message === "") {
@@ -45,8 +49,15 @@ export default defineComponent({
             }
 
             this.messageToCoach.coachId = this.$route.params.id as string;
-            this.messagesStore.addRequest(this.messageToCoach);
-            this.$router.replace("/coaches");
+            try {
+                await this.messagesStore.addRequest(this.messageToCoach);
+                this.$router.replace("/coaches");
+            } catch (error: any) {
+                this.error = error.message ?? "Something went wrong.";
+            }
+        },
+        handleError(): void {
+            this.error = null;
         }
     }
 });

@@ -1,10 +1,16 @@
 <template>
+    <base-dialog :show="error && error.length > 0" title="Error loading requests!" @close="handleError">
+        <p>{{ error }}</p>
+    </base-dialog>
     <section>
         <base-card>
             <header>
                 <h2>Requests Received</h2>
             </header>
-            <ul v-if="hasRequests">
+            <dev v-if="isLoading">
+                <base-spinner></base-spinner>
+            </dev>
+            <ul v-else-if="hasRequests">
                 <request-item v-for="r in receivedRequests" :req="r" :key="r.id"></request-item>
             </ul>
             <h3 v-else>You haven't received any requests yet.</h3>
@@ -22,6 +28,12 @@ export default defineComponent({
     components: {
         RequestItem,
     },
+    data() {
+        return {
+            error: null as (string | null),
+            isLoading: false,
+        };
+    },
     computed: {
         ...mapStores(messagesStore),
         receivedRequests(): MessageToCoach[] {
@@ -30,6 +42,23 @@ export default defineComponent({
         hasRequests(): boolean {
             return this.messagesStore.hasRequests;
         }
+    },
+    methods: {
+        async loadRequests(): Promise<void> {
+            this.isLoading = true;
+            try {
+                await this.messagesStore.fetchRequests();
+            } catch (err: any) {
+                this.error = err.message || "Something went wrong!";
+            }
+            this.isLoading = false;
+        },
+        handleError() {
+            this.error = null;
+        },
+    },
+    created() {
+        this.loadRequests();
     },
 });
 </script>
