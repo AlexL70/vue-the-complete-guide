@@ -37,6 +37,7 @@ const coachesStore = defineStore("coaches", {
       const data = await response.json();
       if (!response.ok) {
         const error = new Error(data.message ?? "Failed to register coach!");
+        console.log("Throwing coach registering error.");
         throw error;
       }
       this.coaches.unshift(coach);
