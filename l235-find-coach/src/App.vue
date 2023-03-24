@@ -34,12 +34,12 @@ body {
 
 .route-enter-from {
   opacity: 0;
-  transform: scale(0.6) translateY(100px);
+  transform: scale(0.6) translateY(-100px);
 }
 
 .route-leave-to {
   opacity: 0;
-  transform: scale(0.6) translate(-100px);
+  transform: scale(0.6) translate(100px);
 }
 
 .rouet-enter-active {
