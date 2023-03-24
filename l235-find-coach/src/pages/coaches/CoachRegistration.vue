@@ -1,13 +1,15 @@
 <template>
-    <base-dialog :show="error && error.length > 0" title="Error saving coach!" @close="handleError">
-        <p>{{ error }}</p>
-    </base-dialog>
-    <section>
-        <base-card>
-            <h2>Register as a coach now!</h2>
-            <coach-form @new-coach="registerCoach"></coach-form>
-        </base-card>
-    </section>
+    <div>
+        <base-dialog :show="error && error.length > 0" title="Error saving coach!" @close="handleError">
+            <p>{{ error }}</p>
+        </base-dialog>
+        <section>
+            <base-card>
+                <h2>Register as a coach now!</h2>
+                <coach-form @new-coach="registerCoach"></coach-form>
+            </base-card>
+        </section>
+    </div>
 </template>
 
 <script lang="ts">

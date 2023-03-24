@@ -1,25 +1,27 @@
 <template>
-    <base-dialog :show="error && error.length > 0" title="Error loading list of coaches!" @close="handleError">
-        <p>{{ error }}</p>
-    </base-dialog>
-    <section>
-        <coach-filter @change-filter="onChangeFilter"></coach-filter>
-    </section>
-    <section>
-        <base-card>
-            <div class="controls">
-                <base-button mode="outline" @click="loadCoaches">Refresh list</base-button>
-                <base-button link to="/register" v-if="!isCoach">Register as Coach</base-button>
-            </div>
-            <ul v-if="hasCoaches">
-                <coach-item v-for="coach in filteredCoaches" :key="coach.id" :coach="coach"></coach-item>
-            </ul>
-            <div v-else-if="isLoading">
-                <base-spinner></base-spinner>
-            </div>
-            <h3 v-else>No coaches found!</h3>
-        </base-card>
-    </section>
+    <div>
+        <base-dialog :show="error && error.length > 0" title="Error loading list of coaches!" @close="handleError">
+            <p>{{ error }}</p>
+        </base-dialog>
+        <section>
+            <coach-filter @change-filter="onChangeFilter"></coach-filter>
+        </section>
+        <section>
+            <base-card>
+                <div class="controls">
+                    <base-button mode="outline" @click="loadCoaches">Refresh list</base-button>
+                    <base-button link to="/register" v-if="!isCoach">Register as Coach</base-button>
+                </div>
+                <ul v-if="hasCoaches">
+                    <coach-item v-for="coach in filteredCoaches" :key="coach.id" :coach="coach"></coach-item>
+                </ul>
+                <div v-else-if="isLoading">
+                    <base-spinner></base-spinner>
+                </div>
+                <h3 v-else>No coaches found!</h3>
+            </base-card>
+        </section>
+    </div>
 </template>
 
 <script lang="ts">

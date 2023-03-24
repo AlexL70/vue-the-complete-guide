@@ -1,22 +1,25 @@
 <template>
-    <base-dialog :show="error && error.length > 0" title="Error sending message to coach!" @close="handleError">
-        <p>{{ error }}</p>
-    </base-dialog>
-    <form @submit.prevent="submitForm">
-        <div class="form-control">
-            <label for="email">Your email</label>
-            <input type="email" id="email" v-model.trim="messageToCoach.email" />
-        </div>
-        <div class="form-control">
-            <label for="message">Message</label>
-            <textarea id="message" rows="5" v-model.trim="messageToCoach.message"></textarea>
-        </div>
-        <p class="errors" v-if="!formIsValid">Form is not filled in properly. Fill in both email and message and try again.
-        </p>
-        <div class="actions">
-            <base-button :enabled="formIsValid">Send message</base-button>
-        </div>
-    </form>
+    <div>
+        <base-dialog :show="error && error.length > 0" title="Error sending message to coach!" @close="handleError">
+            <p>{{ error }}</p>
+        </base-dialog>
+        <form @submit.prevent="submitForm">
+            <div class="form-control">
+                <label for="email">Your email</label>
+                <input type="email" id="email" v-model.trim="messageToCoach.email" />
+            </div>
+            <div class="form-control">
+                <label for="message">Message</label>
+                <textarea id="message" rows="5" v-model.trim="messageToCoach.message"></textarea>
+            </div>
+            <p class="errors" v-if="!formIsValid">Form is not filled in properly. Fill in both email and message and try
+                again.
+            </p>
+            <div class="actions">
+                <base-button :enabled="formIsValid">Send message</base-button>
+            </div>
+        </form>
+    </div>
 </template>
 
 <script lang="ts">

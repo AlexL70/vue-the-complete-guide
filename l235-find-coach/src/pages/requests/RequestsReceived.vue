@@ -1,21 +1,23 @@
 <template>
-    <base-dialog :show="error && error.length > 0" title="Error loading requests!" @close="handleError">
-        <p>{{ error }}</p>
-    </base-dialog>
-    <section>
-        <base-card>
-            <header>
-                <h2>Requests Received</h2>
-            </header>
-            <dev v-if="isLoading">
-                <base-spinner></base-spinner>
-            </dev>
-            <ul v-else-if="hasRequests">
-                <request-item v-for="r in receivedRequests" :req="r" :key="r.id"></request-item>
-            </ul>
-            <h3 v-else>You haven't received any requests yet.</h3>
-        </base-card>
-    </section>
+    <div>
+        <base-dialog :show="error && error.length > 0" title="Error loading requests!" @close="handleError">
+            <p>{{ error }}</p>
+        </base-dialog>
+        <section>
+            <base-card>
+                <header>
+                    <h2>Requests Received</h2>
+                </header>
+                <dev v-if="isLoading">
+                    <base-spinner></base-spinner>
+                </dev>
+                <ul v-else-if="hasRequests">
+                    <request-item v-for="r in receivedRequests" :req="r" :key="r.id"></request-item>
+                </ul>
+                <h3 v-else>You haven't received any requests yet.</h3>
+            </base-card>
+        </section>
+    </div>
 </template>
 
 <script lang="ts">
