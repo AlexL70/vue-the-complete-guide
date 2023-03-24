@@ -1,3 +1,7 @@
+export interface LoginData {
+  email: string;
+  password: string;
+}
 export interface Coach {
   id: string;
   firstName: string;
