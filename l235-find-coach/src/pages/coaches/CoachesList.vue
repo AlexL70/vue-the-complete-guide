@@ -1,6 +1,6 @@
 <template>
     <div>
-        <base-dialog :show="error && error.length > 0" title="Error loading list of coaches!" @close="handleError">
+        <base-dialog :show="showError" title="Error loading list of coaches!" @close="handleError">
             <p>{{ error }}</p>
         </base-dialog>
         <section>
@@ -66,6 +66,9 @@ export default defineComponent({
         isCoach() {
             return this.isLoading || this.coachesStore.isCoach;
         },
+        showError(): boolean {
+            return this.error !== null && this.error.length > 0;
+        }
     },
     methods: {
         onChangeFilter(updatedFilters: SpecTagFilter) {

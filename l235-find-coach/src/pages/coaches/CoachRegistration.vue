@@ -1,6 +1,6 @@
 <template>
     <div>
-        <base-dialog :show="error && error.length > 0" title="Error saving coach!" @close="handleError">
+        <base-dialog :show="showError" title="Error saving coach!" @close="handleError">
             <p>{{ error }}</p>
         </base-dialog>
         <section>
@@ -29,6 +29,9 @@ export default defineComponent({
     },
     computed: {
         ...mapStores(coachesStore),
+        showError(): boolean {
+            return this.error !== null && this.error.length > 0
+        }
     },
     methods: {
         async registerCoach(newCoach: Coach): Promise<void> {

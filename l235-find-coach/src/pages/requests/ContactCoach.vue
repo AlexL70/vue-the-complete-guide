@@ -1,6 +1,6 @@
 <template>
     <div>
-        <base-dialog :show="error && error.length > 0" title="Error sending message to coach!" @close="handleError">
+        <base-dialog :show="showError" title="Error sending message to coach!" @close="handleError">
             <p>{{ error }}</p>
         </base-dialog>
         <form @submit.prevent="submitForm">
@@ -41,6 +41,9 @@ export default defineComponent({
     },
     computed: {
         ...mapStores(messageStore),
+        showError(): boolean {
+            return this.error !== null && this.error.length > 0;
+        },
     },
     methods: {
         async submitForm(): Promise<void> {

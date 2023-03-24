@@ -1,6 +1,6 @@
 <template>
     <div>
-        <base-dialog :show="error && error.length > 0" title="Error loading requests!" @close="handleError">
+        <base-dialog :show="showError" title="Error loading requests!" @close="handleError">
             <p>{{ error }}</p>
         </base-dialog>
         <section>
@@ -8,9 +8,9 @@
                 <header>
                     <h2>Requests Received</h2>
                 </header>
-                <dev v-if="isLoading">
+                <div v-if="isLoading">
                     <base-spinner></base-spinner>
-                </dev>
+                </div>
                 <ul v-else-if="hasRequests">
                     <request-item v-for="r in receivedRequests" :req="r" :key="r.id"></request-item>
                 </ul>
@@ -43,6 +43,9 @@ export default defineComponent({
         },
         hasRequests(): boolean {
             return this.messagesStore.hasRequests;
+        },
+        showError(): boolean {
+            return this.error !== null && this.error.length > 0;
         }
     },
     methods: {
