@@ -4,6 +4,7 @@ import userStore from "./user";
 
 const coachesStore = defineStore("coaches", {
   state: () => ({
+    lastFetchTimestamp: null as number | null,
     usrStore: userStore(),
     coaches: [] as Coach[],
   }),
@@ -25,6 +26,9 @@ const coachesStore = defineStore("coaches", {
     },
     isCoach(state) {
       return state.coaches.some((c) => c.id == state.usrStore.getUserId);
+    },
+    lastFetched(): number | null {
+      return this.lastFetchTimestamp;
     },
   },
   actions: {
@@ -65,6 +69,7 @@ const coachesStore = defineStore("coaches", {
         coaches.push(coach);
       }
       this.coaches = coaches;
+      this.lastFetchTimestamp = new Date().getTime();
     },
   },
 });

@@ -83,7 +83,13 @@ export default defineComponent({
         }
     },
     created() {
-        this.loadCoaches();
+        // Reaload data if last loading was more than 30 seconds ago
+        if (!this.coachesStore.lastFetched)
+            return;
+        const oldTimestamp = this.coachesStore.lastFetchTimestamp ?? 0;
+        const currTimestamp = new Date().getTime();
+        if (currTimestamp - oldTimestamp >= 30000)
+            this.loadCoaches();
     },
 });
 </script>
