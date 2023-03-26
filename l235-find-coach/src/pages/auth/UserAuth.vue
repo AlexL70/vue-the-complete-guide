@@ -20,6 +20,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import type { LoginData } from "@/types/dto"
+import userStore from "@/store/user";
+import { mapStores } from "pinia";
 export default defineComponent({
     data() {
         return {
@@ -32,6 +34,7 @@ export default defineComponent({
         };
     },
     computed: {
+        ...mapStores(userStore),
         submitButtonCaption() {
             switch (this.mode) {
                 case "login":
@@ -55,7 +58,15 @@ export default defineComponent({
                 this.formIsValid = false;
                 return;
             }
+            switch (this.mode) {
+                case "login":
+                    //  TODO – add loging code
+                    break;
 
+                case "signup":
+                    this.userStore.signup(this.loginData);
+                    break;
+            }
             //  send http request for login/signup
         },
         switchAuthMode() {
