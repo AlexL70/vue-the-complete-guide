@@ -80,7 +80,7 @@ export default defineComponent({
                 switch (this.mode) {
                     case "login":
                         errMsg = "Failed to authenticate user.";
-                        //  TODO – add login code
+                        await this.userStore.login(this.loginData);
                         break;
 
                     case "signup":

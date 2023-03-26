@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { LoginData, SignupResponse } from "@/types/dto";
+import type { LoginData, SignupResponse, SigninResponse } from "@/types/dto";
 
 const userStore = defineStore("user", {
   state: () => ({
@@ -16,7 +16,34 @@ const userStore = defineStore("user", {
     },
   },
   actions: {
-    login() {},
+    async login(creds: LoginData): Promise<void> {
+      const response = await fetch(
+        `${this.baseAuthUrl}:signInWithPassword?key=${this.webApiKey}`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: creds.email,
+            password: creds.password,
+            returnSecureToken: true,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.log(data);
+        const error = new Error(data.message ?? "Failed to sign in");
+        throw error;
+      }
+
+      const typedData = data as SigninResponse;
+
+      // Set user's properties
+      this.token = typedData.idToken;
+      this.userId = typedData.localId;
+      this.tokenExpiresIn = typedData.expiresIn;
+    },
     async signup(creds: LoginData): Promise<void> {
       const response = await fetch(
         `${this.baseAuthUrl}:signUp?key=${this.webApiKey}`,
@@ -38,13 +65,7 @@ const userStore = defineStore("user", {
         throw error;
       }
 
-      const typedData = {
-        idToken: data.idToken,
-        email: data.email,
-        expiresIn: data.expiresIn,
-        refreshToken: data.refreshToken,
-        localId: data.localId,
-      } as SignupResponse;
+      const typedData = data as SignupResponse;
 
       // Set user's properties
       this.token = typedData.idToken;

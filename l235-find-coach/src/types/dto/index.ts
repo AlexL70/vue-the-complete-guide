@@ -26,3 +26,7 @@ export interface SignupResponse {
   expiresIn: string; // The number of seconds in which the ID token expires.
   localId: string; // The uid of the newly created user.
 }
+
+export interface SigninResponse extends SignupResponse {
+  registered: boolean; // Whether the email is for an existing account.
+}
