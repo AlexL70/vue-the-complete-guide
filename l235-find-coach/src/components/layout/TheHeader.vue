@@ -4,11 +4,26 @@
             <h2><router-link to="/">Find a Coach</router-link></h2>
             <ul>
                 <li><router-link to="/coaches">All Coaches</router-link></li>
-                <li><router-link to="/requests">Requests</router-link></li>
+                <li v-if="isLoggedIn"><router-link to="/requests">Requests</router-link></li>
+                <li v-else><router-link to="/auth">Login</router-link></li>
             </ul>
         </nav>
     </header>
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import userStore from "@/store/user";
+import { mapStores } from "pinia";
+export default defineComponent({
+    computed: {
+        ...mapStores(userStore),
+        isLoggedIn(): boolean {
+            return this.userStore.isAuthenticated;
+        }
+    }
+});
+</script>
 
 <style scoped>
 header {

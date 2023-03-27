@@ -10,7 +10,7 @@
             <base-card>
                 <div class="controls">
                     <base-button mode="outline" @click="loadCoaches">Refresh list</base-button>
-                    <base-button link to="/register" v-if="!isCoach">Register as Coach</base-button>
+                    <base-button link to="/register" v-if="canRegister">Register as Coach</base-button>
                 </div>
                 <ul v-if="hasCoaches">
                     <coach-item v-for="coach in filteredCoaches" :key="coach.id" :coach="coach"></coach-item>
@@ -27,6 +27,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import coachesStore from "@/store/coaches";
+import userStore from "@/store/user";
 import { mapStores } from "pinia";
 import type { Coach } from "@/types/dto";
 import type { SpecTagFilter } from "@/types/internal";
@@ -49,6 +50,7 @@ export default defineComponent({
     },
     computed: {
         ...mapStores(coachesStore),
+        ...mapStores(userStore),
         filteredCoaches(): Coach[] {
             return this.coachesStore.getCoaches.filter(coach => {
                 if (this.activeFilters.backend && coach.areas.includes("backend"))
@@ -63,12 +65,12 @@ export default defineComponent({
         hasCoaches(): boolean {
             return !this.isLoading && this.coachesStore.hasCoaches;
         },
-        isCoach() {
-            return this.isLoading || this.coachesStore.isCoach;
+        canRegister() {
+            return !this.isLoading && this.userStore.isAuthenticated && !this.coachesStore.isCoach;
         },
         showError(): boolean {
             return this.error !== null && this.error.length > 0;
-        }
+        },
     },
     methods: {
         onChangeFilter(updatedFilters: SpecTagFilter) {

@@ -12,11 +12,18 @@ const userStore = defineStore("user", {
   }),
   getters: {
     getUserId(state): string | null {
-      return this.userId;
+      return state.userId;
+    },
+    getToken(state): string {
+      return state.token ?? "";
+    },
+    isAuthenticated(state): boolean {
+      return state.token != null && state.token.length > 0;
     },
   },
   actions: {
     async login(creds: LoginData): Promise<void> {
+      console.log("Sending login request...");
       const response = await fetch(
         `${this.baseAuthUrl}:signInWithPassword?key=${this.webApiKey}`,
         {

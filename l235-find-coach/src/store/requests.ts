@@ -12,7 +12,7 @@ const messagesStore = defineStore("messages", {
       return state.usrStore.baseSrvUrl;
     },
     getUrl(state) {
-      return `${state.usrStore.baseSrvUrl}requests/${state.usrStore.userId}.json`;
+      return `${state.usrStore.baseSrvUrl}requests/${state.usrStore.getUserId}.json?auth=${state.usrStore.getToken}`;
     },
     getRequests(state): MessageToCoach[] {
       return state.requests.filter((r) => r.coachId === this.usrStore.userId);

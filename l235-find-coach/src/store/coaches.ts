@@ -13,7 +13,7 @@ const coachesStore = defineStore("coaches", {
       return `${state.usrStore.baseSrvUrl}coaches.json`;
     },
     getUserUrl(state) {
-      return `${state.usrStore.baseSrvUrl}coaches/${state.usrStore.userId}.json`;
+      return `${state.usrStore.baseSrvUrl}coaches/${state.usrStore.userId}.json?auth=${state.usrStore.getToken}`;
     },
     getCoaches(state): Array<Coach> {
       return state.coaches;
@@ -33,7 +33,7 @@ const coachesStore = defineStore("coaches", {
   },
   actions: {
     async registerCoach(coach: Coach): Promise<void> {
-      coach.id = this.usrStore.getUserId;
+      coach.id = this.usrStore.getUserId ?? "";
       const response = await fetch(this.getUserUrl, {
         method: "PUT",
         body: JSON.stringify(coach),
@@ -46,7 +46,6 @@ const coachesStore = defineStore("coaches", {
       this.coaches.unshift(coach);
     },
     async loadCoaches(): Promise<void> {
-      console.log("Reloading coaches...");
       const response = await fetch(this.getUrl, {});
       const data = await response.json();
       if (!response.ok) {
