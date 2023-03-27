@@ -26,6 +26,7 @@ export default defineComponent({
     methods: {
         logout() {
             this.userStore.logout();
+            this.$router.replace("/coaches");
         }
     }
 });

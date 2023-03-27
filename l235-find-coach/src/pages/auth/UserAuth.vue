@@ -88,6 +88,8 @@ export default defineComponent({
                         await this.userStore.signup(this.loginData);
                         break;
                 }
+                const redirectUrl = `/${this.$route.query.redirect ?? "coaches"}`;
+                this.$router.replace(redirectUrl);
             } catch (err: any) {
                 this.error = err.message ?? errMsg;
             }

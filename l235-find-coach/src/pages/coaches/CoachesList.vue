@@ -11,6 +11,9 @@
                 <div class="controls">
                     <base-button mode="outline" @click="loadCoaches">Refresh list</base-button>
                     <base-button link to="/register" v-if="canRegister">Register as Coach</base-button>
+                    <base-button link to="/auth?redirect=register" v-else-if="canLogin">
+                        Login to register as a coach
+                    </base-button>
                 </div>
                 <ul v-if="hasCoaches">
                     <coach-item v-for="coach in filteredCoaches" :key="coach.id" :coach="coach"></coach-item>
@@ -67,6 +70,9 @@ export default defineComponent({
         },
         canRegister() {
             return !this.isLoading && this.userStore.isAuthenticated && !this.coachesStore.isCoach;
+        },
+        canLogin() {
+            return !this.isLoading && !this.userStore.isAuthenticated;
         },
         showError(): boolean {
             return this.error !== null && this.error.length > 0;

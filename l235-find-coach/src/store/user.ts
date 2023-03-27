@@ -23,7 +23,6 @@ const userStore = defineStore("user", {
   },
   actions: {
     async login(creds: LoginData): Promise<void> {
-      console.log("Sending login request...");
       const response = await fetch(
         `${this.baseAuthUrl}:signInWithPassword?key=${this.webApiKey}`,
         {
