@@ -51,6 +51,11 @@ const userStore = defineStore("user", {
       this.userId = typedData.localId;
       this.tokenExpiresIn = typedData.expiresIn;
     },
+    logout() {
+      this.token = null;
+      this.userId = null;
+      this.tokenExpiresIn = null;
+    },
     async signup(creds: LoginData): Promise<void> {
       const response = await fetch(
         `${this.baseAuthUrl}:signUp?key=${this.webApiKey}`,

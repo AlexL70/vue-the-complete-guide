@@ -5,6 +5,7 @@
             <ul>
                 <li><router-link to="/coaches">All Coaches</router-link></li>
                 <li v-if="isLoggedIn"><router-link to="/requests">Requests</router-link></li>
+                <li v-if="isLoggedIn" @click="logout"><base-button>Log out</base-button></li>
                 <li v-else><router-link to="/auth">Login</router-link></li>
             </ul>
         </nav>
@@ -20,6 +21,11 @@ export default defineComponent({
         ...mapStores(userStore),
         isLoggedIn(): boolean {
             return this.userStore.isAuthenticated;
+        }
+    },
+    methods: {
+        logout() {
+            this.userStore.logout();
         }
     }
 });
