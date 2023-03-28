@@ -18,9 +18,18 @@ export default defineComponent({
   },
   computed: {
     ...mapStores(userStore),
+    autoLogout() {
+      return this.userStore.getIsAutoLoggetOut;
+    }
   },
   created() {
     this.userStore.autoLogin();
+  },
+  watch: {
+    autoLogout(newValue, oldValue) {
+      if (!oldValue && newValue)
+        this.$router.replace("/");
+    }
   }
 });
 </script>

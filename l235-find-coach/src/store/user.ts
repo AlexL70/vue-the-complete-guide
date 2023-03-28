@@ -3,9 +3,11 @@ import type { LoginData, SignupResponse, SigninResponse } from "@/types/dto";
 
 const userStore = defineStore("user", {
   state: () => ({
+    timer: undefined as number | undefined,
     userId: null as string | null,
     token: null as string | null,
-    tokenExpiresIn: null as string | null,
+    autoLoggedOut: false,
+    expirationTimestamp: null as number | null,
     baseSrvUrl: import.meta.env["VITE_COACH_BASE_SRV_URL"],
     baseAuthUrl: import.meta.env["VITE_AUTH_BASE_SRV_URL"],
     webApiKey: import.meta.env["VITE_WEB_API_KEY"],
@@ -19,6 +21,9 @@ const userStore = defineStore("user", {
     },
     isAuthenticated(state): boolean {
       return state.token != null && state.token.length > 0;
+    },
+    getIsAutoLoggetOut(state): boolean {
+      return state.autoLoggedOut;
     },
   },
   actions: {
@@ -53,13 +58,26 @@ const userStore = defineStore("user", {
 
       const typedData = data as SigninResponse;
 
+      const expiresIn = +typedData.expiresIn * 1000;
+      //const expiresIn = 10000; // uncomment this and comment out line above to test autologout
+      const expirationTimestamp = new Date().getTime() + expiresIn;
+
+      this.timer = setTimeout(() => {
+        this.autologout();
+      }, expiresIn);
+
       localStorage.setItem("token", typedData.idToken);
       localStorage.setItem("userId", typedData.localId);
+      localStorage.setItem(
+        "expirationTimestamp",
+        expirationTimestamp.toFixed()
+      );
 
       // Set user's properties
       this.token = typedData.idToken;
       this.userId = typedData.localId;
-      this.tokenExpiresIn = typedData.expiresIn;
+      this.expirationTimestamp = expirationTimestamp;
+      this.autoLoggedOut = false;
     },
     async signup(creds: LoginData): Promise<void> {
       return await this.auth("signup", creds);
@@ -70,17 +88,30 @@ const userStore = defineStore("user", {
     autoLogin() {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
-      if (token && userId) {
+      const expiration = localStorage.getItem("expirationTimestamp");
+      const currTimestamp = new Date().getTime();
+      if (token && userId && expiration && +expiration > currTimestamp) {
         this.token = token;
         this.userId = userId;
-      }
+        this.expirationTimestamp = +expiration;
+        this.autoLoggedOut = false;
+        this.timer = setTimeout(() => {
+          this.autologout();
+        }, this.expirationTimestamp - currTimestamp);
+      } else this.logout();
     },
     logout() {
+      clearTimeout(this.timer);
       this.token = null;
       this.userId = null;
-      this.tokenExpiresIn = null;
+      this.expirationTimestamp = null;
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
+      localStorage.removeItem("expirationTimestamp");
+    },
+    autologout() {
+      this.logout();
+      this.autoLoggedOut = true;
     },
   },
 });
