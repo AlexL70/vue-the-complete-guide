@@ -31,12 +31,17 @@
 import { defineComponent } from "vue";
 import coachesStore from "@/store/coaches";
 import userStore from "@/store/user";
-import { mapStores } from "pinia";
 import type { Coach } from "@/types/dto";
 import type { SpecTagFilter } from "@/types/internal";
 import CoachItem from "@/components/coaches/CoachItem.vue";
 import CoachFilter from "@/components/coaches/CoachFilter.vue";
 export default defineComponent({
+    setup() {
+        const users = userStore();
+        const coaches = coachesStore();
+
+        return { users, coaches };
+    },
     components: {
         CoachItem, CoachFilter,
     },
@@ -52,10 +57,8 @@ export default defineComponent({
         };
     },
     computed: {
-        ...mapStores(coachesStore),
-        ...mapStores(userStore),
         filteredCoaches(): Coach[] {
-            return this.coachesStore.getCoaches.filter(coach => {
+            return this.coaches.getCoaches.filter(coach => {
                 if (this.activeFilters.backend && coach.areas.includes("backend"))
                     return true;
                 if (this.activeFilters.frontend && coach.areas.includes("frontend"))
@@ -66,13 +69,13 @@ export default defineComponent({
             });
         },
         hasCoaches(): boolean {
-            return !this.isLoading && this.coachesStore.hasCoaches;
+            return !this.isLoading && this.coaches.hasCoaches;
         },
         canRegister() {
-            return !this.isLoading && this.userStore.isAuthenticated && !this.coachesStore.isCoach;
+            return !this.isLoading && this.users.isAuthenticated && !this.coaches.isCoach;
         },
         canLogin() {
-            return !this.isLoading && !this.userStore.isAuthenticated;
+            return !this.isLoading && !this.users.isAuthenticated;
         },
         showError(): boolean {
             return this.error !== null && this.error.length > 0;
@@ -85,7 +88,7 @@ export default defineComponent({
         async loadCoaches() {
             this.isLoading = true;
             try {
-                await this.coachesStore.loadCoaches()
+                await this.coaches.loadCoaches()
             } catch (error: any) {
                 this.error = error.message || "Something went wrong!";
             }
@@ -97,7 +100,7 @@ export default defineComponent({
     },
     created() {
         // Reaload data if last loading was more than 30 seconds ago
-        const oldTimestamp = this.coachesStore.lastFetched;
+        const oldTimestamp = this.coaches.lastFetched;
         const currTimestamp = new Date().getTime();
         if (oldTimestamp === null || currTimestamp - oldTimestamp >= 30000)
             this.loadCoaches();

@@ -8,22 +8,24 @@
 </template>
 
 <script lang="ts">
-import { mapStores } from "pinia";
 import { defineComponent } from "vue";
-import TheHeader from "./components/layout/TheHeader.vue";
-import userStore from "./store/user";
+import TheHeader from "@/components/layout/TheHeader.vue";
+import userStore from "@/store/user";
 export default defineComponent({
+  setup() {
+    const users = userStore();
+    return { users };
+  },
   components: {
     TheHeader
   },
   computed: {
-    ...mapStores(userStore),
     autoLogout() {
-      return this.userStore.getIsAutoLoggetOut;
+      return this.users.getIsAutoLoggetOut;
     }
   },
   created() {
-    this.userStore.autoLogin();
+    this.users.autoLogin();
   },
   watch: {
     autoLogout(newValue, oldValue) {
