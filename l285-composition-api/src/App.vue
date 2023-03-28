@@ -1,14 +1,22 @@
 <template>
   <section class="container">
-    <h2>{{ userName }}</h2>
+    <h2>{{ user.name }}</h2>
+    <h3>{{ user.age }}</h3>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import type { User } from "@/types"
+const user = ref<User>({
+  name: "Maximilian",
+  age: 33,
+});
 const userName = ref<string>("Maximilian");
+const userAge = ref<number>(33);
 setTimeout(() => {
-  userName.value = "Alexander";
+  user.value.name = "Alexander";
+  user.value.age = 52;
 }, 2000)
 </script>
 
