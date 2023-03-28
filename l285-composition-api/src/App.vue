@@ -6,17 +6,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive } from 'vue';
 import type { User } from "@/types"
-const user = ref<User>({
+const user = reactive<User>({
   name: "Maximilian",
   age: 33,
 });
-const userName = ref<string>("Maximilian");
-const userAge = ref<number>(33);
 setTimeout(() => {
-  user.value.name = "Alexander";
-  user.value.age = 52;
+  user.name = "Alexander";
+  user.age = 52;
 }, 2000)
 </script>
 
