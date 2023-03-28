@@ -4,14 +4,12 @@
   </section>
 </template>
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      userName: 'Maximilian',
-    };
-  },
-};
+<script setup lang="ts">
+import { ref } from 'vue';
+const userName = ref<string>("Maximilian");
+setTimeout(() => {
+  userName.value = "Alexander";
+}, 2000)
 </script>
 
 <style>
