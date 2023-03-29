@@ -5,7 +5,8 @@
     <button @click="changeAge">Change age</button>
     <div>
       <input type="text" placeholder="First Name" v-model="firstName">
-      <input type="text" placeholder="Last Name" v-model="lastName">
+      <input type="text" placeholder="Last Name" ref="lastNameInput">
+      <button @click="setLastName">Set Last Name</button>
     </div>
   </section>
 </template>
@@ -16,6 +17,9 @@ import { ref, computed, watch } from 'vue';
 const userAge = ref<number>(31);
 const firstName = ref<string>("");
 const lastName = ref<string>("")
+
+const lastNameInput = ref<HTMLInputElement | null>(null);
+
 const fullName = computed<string>(() => {
   return `${firstName.value}${firstName.value.length > 0 && lastName.value.length > 0 ? " " : ""}${lastName.value}`
 });
@@ -26,6 +30,9 @@ function changeAge(): void {
   userAge.value = 32
 }
 
+function setLastName(): void {
+  lastName.value = lastNameInput.value?.value ?? "";
+}
 </script>
 
 <style>
