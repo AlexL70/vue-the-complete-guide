@@ -1,13 +1,17 @@
 <template>
   <section class="container">
-    <h2>{{ user.name }}</h2>
+    <h2>{{ fullName }}</h2>
     <h3>{{ user.age }}</h3>
     <button @click="changeAge">Change age</button>
+    <div>
+      <input type="text" placeholder="First Name" @input="setFirstName">
+      <input type="text" placeholder="Last Name" @input="setLastName">
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, ref, computed } from 'vue';
 import type { User } from "@/types"
 
 const user = reactive<User>({
@@ -15,8 +19,21 @@ const user = reactive<User>({
   age: 31,
 });
 
+const firstName = ref<string>("");
+const lastName = ref<string>("")
+const fullName = computed<string>(() => {
+  return `${firstName.value}${firstName.value.length > 0 && lastName.value.length > 0 ? " " : ""}${lastName.value}`
+});
+
 function changeAge(): void {
   user.age = 32
+}
+
+function setFirstName(event: Event) {
+  firstName.value = (event.target as HTMLInputElement).value;
+}
+function setLastName(event: Event) {
+  lastName.value = (event.target as HTMLInputElement).value;
 }
 </script>
 
