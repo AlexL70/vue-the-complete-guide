@@ -19,45 +19,36 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      availableFunds: 100,
-      currentExpenses: 0,
-      enteredExpense: 0,
-    };
-  },
-  computed: {
-    remainingFunds() {
-      return this.availableFunds - this.currentExpenses;
-    },
-  },
-  methods: {
-    addExpense() {
-      this.currentExpenses += this.enteredExpense;
-    },
-  },
-  watch: {
-    remainingFunds(val) {
-      if (val < 0) {
-        alert('You are broke!');
-      }
-    },
-  },
-};
+<script setup>
+import { ref, computed, watch } from "vue";
+const availableFunds = 100;
+const currentExpenses = ref(0);
+const enteredExpense = ref(0);
+const remainingFunds = computed(function () {
+  return availableFunds - currentExpenses.value;
+});
+watch(remainingFunds, (newVal) => {
+  if (newVal < 0)
+    alert('You are broke!');
+});
+function addExpense() {
+  currentExpenses.value += enteredExpense.value;
+}
 </script>
 
 <style>
 * {
   box-sizing: border-box;
 }
+
 html {
   font-family: sans-serif;
 }
+
 body {
   margin: 0;
 }
+
 header {
   width: 100%;
   height: 5rem;
@@ -67,6 +58,7 @@ header {
   background-color: #30006e;
   color: white;
 }
+
 section {
   margin: 2rem auto;
   max-width: 35rem;
@@ -78,14 +70,17 @@ section {
 form div {
   margin: 1rem 0;
 }
+
 input {
   width: 100%;
   padding: 0.15rem;
 }
+
 label {
   font-weight: bold;
   margin: 0.5rem 0;
 }
+
 button {
   background-color: #30006e;
   border: 1px solid #30006e;
@@ -94,6 +89,7 @@ button {
   padding: 0.5rem 1.5rem;
   color: white;
 }
+
 button:hover,
 button:active {
   background-color: #5819ac;
