@@ -2,20 +2,22 @@
   <section class="container">
     <h2>{{ user.name }}</h2>
     <h3>{{ user.age }}</h3>
+    <button @click="changeAge">Change age</button>
   </section>
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue';
 import type { User } from "@/types"
+
 const user = reactive<User>({
   name: "Maximilian",
-  age: 33,
+  age: 31,
 });
-setTimeout(() => {
-  user.name = "Alexander";
-  user.age = 52;
-}, 2000)
+
+function changeAge(): void {
+  user.age = 32
+}
 </script>
 
 <style>
