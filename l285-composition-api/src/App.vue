@@ -4,8 +4,8 @@
     <h3>{{ user.age }}</h3>
     <button @click="changeAge">Change age</button>
     <div>
-      <input type="text" placeholder="First Name" @input="setFirstName">
-      <input type="text" placeholder="Last Name" @input="setLastName">
+      <input type="text" placeholder="First Name" v-model="firstName">
+      <input type="text" placeholder="Last Name" v-model="lastName">
     </div>
   </section>
 </template>
@@ -29,12 +29,6 @@ function changeAge(): void {
   user.age = 32
 }
 
-function setFirstName(event: Event) {
-  firstName.value = (event.target as HTMLInputElement).value;
-}
-function setLastName(event: Event) {
-  lastName.value = (event.target as HTMLInputElement).value;
-}
 </script>
 
 <style>
