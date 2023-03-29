@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <user-data :user="{ firstName, lastName, age: userAge }"></user-data>
+    <user-data :first-name="firstName" :last-name="lastName"></user-data>
     <button @click="changeAge">Change age</button>
     <div>
       <input type="text" placeholder="First Name" v-model="firstName">
@@ -12,13 +12,14 @@
 
 <script setup lang="ts">
 import UserData from "@/components/UserData.vue";
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, provide } from 'vue';
 
 const userAge = ref<number>(31);
 const firstName = ref<string>("");
 const lastName = ref<string>("")
 
 const lastNameInput = ref<HTMLInputElement | null>(null);
+provide("userAge", userAge);
 
 const fullName = computed<string>(() => {
   return `${firstName.value}${firstName.value.length > 0 && lastName.value.length > 0 ? " " : ""}${lastName.value}`
