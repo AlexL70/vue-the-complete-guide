@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <h2>{{ fullName }}</h2>
-    <h3>{{ user.age }}</h3>
+    <h3>{{ userAge }}</h3>
     <button @click="changeAge">Change age</button>
     <div>
       <input type="text" placeholder="First Name" v-model="firstName">
@@ -11,22 +11,19 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed } from 'vue';
-import type { User } from "@/types"
+import { ref, computed, watch } from 'vue';
 
-const user = reactive<User>({
-  name: "Maximilian",
-  age: 31,
-});
-
+const userAge = ref<number>(31);
 const firstName = ref<string>("");
 const lastName = ref<string>("")
 const fullName = computed<string>(() => {
   return `${firstName.value}${firstName.value.length > 0 && lastName.value.length > 0 ? " " : ""}${lastName.value}`
 });
 
+watch([fullName, userAge], (newVal, oldVal) => { console.log("User changed! It was:", oldVal, "But now it is:", newVal) });
+
 function changeAge(): void {
-  user.age = 32
+  userAge.value = 32
 }
 
 </script>
