@@ -1,22 +1,25 @@
 <template>
   <section>
     <h2>{{ title }}</h2>
-    <h3>${{ price}}</h3>
-    <p>{{ description}}</p>
+    <h3>${{ price }}</h3>
+    <p>{{ description }}</p>
   </section>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { inject, computed } from 'vue';
 
 export default {
-  setup() {
-    const title = ref('');
-    const price = ref(null);
-    const description = ref('');
+  setup(props) {
+    const product = inject('products').value.find((p) => p.id === props.pid);
+
+    const title = computed(() => product.title);
+    const price = computed(() => product.price);
+    const description = computed(() => product.description);
 
     return { title, price, description };
   },
+  props: ["pid"],
 };
 </script>
 
